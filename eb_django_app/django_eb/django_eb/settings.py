@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'django_eb.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cis550project',
+        'USER': 'cis550',
+        'PASSWORD': 'squadcis550',
+        'HOST': 'cis550-squad-mysql-instance.cfnko2qhyshs.us-west-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
