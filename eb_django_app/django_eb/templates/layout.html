@@ -9,9 +9,7 @@
 		<script src="{% static 'js/csrf.js' %}"></script>
 	</head>
 	<body>
-		<h1>Hello Moochelle and Chardu:</h1>
-		<h2>Say an actor name (e.g. "Tom Hanks")!</h2>
-		<h4 id="actor_info"></h4>
+		<h1>Hello Moochelle and Chardu: {{ movie.name }}</h1>
 
 		<button id="start_button" onclick="startButton(event)">Click to Speak</button>
 
@@ -65,7 +63,7 @@
 								type : "POST",
 								data : { query : final_transcript },
 								success : function(json) {
-									$('#actor_info').text("This actor's id is: "+json.actor_id);
+									console.log(json);
 								},
 								error : function(xhr,errmsg,err) {
 
