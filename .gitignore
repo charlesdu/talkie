@@ -1,9 +1,8 @@
 
-<<<<<<< HEAD
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-=======
+
+# Python
 *.pyc
->>>>>>> origin/master
