@@ -1,0 +1,10 @@
+branch-defaults:
+  default:
+    environment: eb-django-app-dev
+global:
+  application_name: eb_django_app
+  default_ec2_keyname: aws-eb
+  default_platform: 64bit Amazon Linux 2015.09 v2.0.4 running Python 2.7
+  default_region: us-west-2
+  profile: eb-cli
+  sc: null

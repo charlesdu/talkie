@@ -7,12 +7,10 @@ from models import *
 
 
 def index(request):
-	movie = Movie.objects.get(mid=9)
-	actor = Actor.objects.get(name="Tom Hanks")
-	context = RequestContext(request, {'movie': actor})
+	context = RequestContext(request, {})
 	return render(request, 'index.html', context)
 
-def search(request):
+def dashboard(request):
 	if request.method == 'POST':
 		post_text = str(request.POST.get('query'))
 		response_data = {}
@@ -22,10 +20,5 @@ def search(request):
 
 		return HttpResponse(
 			json.dumps(response_data),
-			content_type="application/json"
 		)
 	else:
-		return HttpResponse(
-			json.dumps({"nothing to see": "this isn't happening"}),
-			content_type="application/json"
-		)
