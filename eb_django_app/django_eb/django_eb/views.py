@@ -4,7 +4,7 @@ from django.template import RequestContext, loader
 from django.shortcuts import render
 
 from models import *
-
+from utils import *
 
 def index(request):
 	context = RequestContext(request, {})
@@ -12,13 +12,17 @@ def index(request):
 
 def dashboard(request):
 	if request.method == 'POST':
-		post_text = str(request.POST.get('query'))
+		query = str(request.POST.get('query'))
+		movies = parse_query(query)
 		response_data = {}
-		actor = Actor.objects.get(name=post_text)
+		actor = Actor.objects.get(name=query)
 
 		response_data['actor_id'] = actor.aid
 
 		return HttpResponse(
 			json.dumps(response_data),
+			content_type = "application/json"
 		)
 	else:
+		context = RequestContext(request, {})
+		return render(request, 'dashboard.html', context)
