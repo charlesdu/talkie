@@ -10,12 +10,13 @@ body {
 	margin: 50px auto;
 	padding: 10px;
 	width: 500px;
-	height: 300px;
 }
 
 .welcome-header {
 	text-align: center;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300px;
 }
 
 .login-button {
@@ -30,8 +31,15 @@ body {
 	margin: 0px auto;
 }
 
+.error-login {
+	color: #E53935;
+}
+
 p {
 	text-align: center;
 }
 
+.slogan p {
+	font-size: 17px;
+}
 
