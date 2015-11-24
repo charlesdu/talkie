@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-	<h2>Say an actor name (e.g. "Tom Hanks")!</h2>
+	<h2>Say "Show me movies featuring _______" (e.g. "Tom Hanks")!</h2>
 	<h4 id="actor_info"></h4>
 
 	<button id="start_button" onclick="startButton(event)">Click to Speak</button>
@@ -50,13 +50,12 @@
 				for (var i = event.resultIndex; i < event.results.length; ++i) {
 					if (event.results[i].isFinal) {
 						final_transcript += event.results[i][0].transcript;
-						console.log(final_transcript);
 						$.ajax({
 							url : "/dashboard/",
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
-								$('#actor_info').text("This actor's id is: "+json.actor_id);
+								$('#actor_info').text("One of these movies is: \n"+json);
 							},
 							error : function(xhr,errmsg,err) {
 

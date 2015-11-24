@@ -13,14 +13,12 @@ def index(request):
 def dashboard(request):
 	if request.method == 'POST':
 		query = str(request.POST.get('query'))
-		movies = parse_query(query)
-		response_data = {}
-		actor = Actor.objects.get(name=query)
-
-		response_data['actor_id'] = actor.aid
+		movies = run_NLP(query)
+		movie = movies[0].name
+		print movie
 
 		return HttpResponse(
-			json.dumps(response_data),
+			json.dumps(movie),
 			content_type = "application/json"
 		)
 	else:
