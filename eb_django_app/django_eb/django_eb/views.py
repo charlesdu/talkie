@@ -5,12 +5,18 @@ from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.db import IntegrityError
 from pprint import pprint
 from django.core import serializers
 
 from models import *
 from utils import *
+
+def logout(request):
+	auth_logout(request)
+	context = RequestContext(request, {})
+	return render(request, 'login.html', context)
 
 def login(request):
 	if request.method == 'POST':
