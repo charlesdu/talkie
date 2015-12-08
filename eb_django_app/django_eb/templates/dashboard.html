@@ -4,12 +4,271 @@
 	<h2>Say "Show me movies featuring _______" (e.g. "Tom Hanks")!</h2>
 	<h4 id="actor_info"></h4>
 
-	<button id="start_button" onclick="startButton(event)">Click to Speak</button>
-
 	<div id="results">
 		<span id="final_span"></span>
 		<span id="interim_span"></span>
 	</div>
+
+  <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="{% static 'images/logo_no_waves.png' %}" style="width:55px; height:auto;"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">User Profile</a></li>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <h1 class="text-center"><img src="{% static 'images/logo_no_waves.png' %}" style="width:150px; height:auto;"></h1>
+      </div>
+
+      <br>
+
+      <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-info btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+
+      <br>
+
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Start Speaking Now...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-10 -->
+      </div><!-- /.row -->
+
+      <br><br>
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
+            <center><h3>Search Results</h3></center>
+          </div>
+      </div>
+
+      <br><br>
+
+      <!-- first row of results -->
+      <div class="row">
+        <div class = "col-md-2 col-lg-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+         
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+      </div>
+
+      <br><br>
+
+      <!-- second row of results -->
+      <div class="row">
+        <div class = "col-md-2 col-lg-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+         
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+
+         <div class = "col-md-2">
+          <div class="panel panel-default">
+            <div class="panel-heading">Movie Name</div>
+
+            <div class="panel-body">
+              <a href="#">
+                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                </a>
+            </div>
+          </div> 
+        </div>
+      </div>
+
+
+
+      <!-- Modal to display search results -->
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <center><h2 class="modal-title">Forrest Gump</h2></center>
+              </div>
+
+              <div class = "modal-body">
+                <div class="row">
+                   <div class = "col-md-5">
+                    <div class="panel panel-default">
+
+                     <div class="panel-body">
+                        <a href="#">
+                            <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                          </a>
+                      </div>
+
+                    </div> 
+                   </div>
+
+                   <div class = "col-md-7">
+                    <div class="panel panel-default">
+                        <div class="movie-desc">
+                          <h4 style=>Overview</h4>
+                          <p>A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="movie-info">
+                          <div class="col-md-6">
+                            <p><strong>Director</strong></p>
+                            <p><strong>Release Date</strong></p>
+                            <p><strong>Genre</strong></p>
+                            <p><strong>Runtime</strong></p>
+                            <p><strong>User Rating</strong></p>
+                          </div>
+
+                          <div class="col-md-6">
+                            <p>(director name)</p>
+                            <p>(release date)</p>
+                            <p>(genres)</p>
+                            <p>(run time)</p>
+                            <p>(rating)</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="cast-container">
+                        <div class="cast">
+                          <div class="col-md-4">
+                            <p><strong>Tom Hanks</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Forrest Gump</p>
+                          </div>
+
+                          <div class="col-md-4">
+                            <p><strong>Sally Field</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Mrs. Gump</p>
+                          </div>
+
+                          <div class="col-md-4">
+                            <p><strong>Rebecca Williams</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Nurse at Park Bench</p>
+                          </div>
+
+                        </div>
+
+                         <div class="cast">
+                          <div class="col-md-4">
+                            <p><strong>Tom Hanks</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Forrest Gump</p>
+                          </div>
+
+                          <div class="col-md-4">
+                            <p><strong>Sally Field</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Mrs. Gump</p>
+                          </div>
+
+                          <div class="col-md-4">
+                            <p><strong>Rebecca Williams</strong></p>
+                            <p style="text-indent:10px; font-size:10px;">as Nurse at Park Bench</p>
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
 
 	<script>
 		var final_transcript = '';
