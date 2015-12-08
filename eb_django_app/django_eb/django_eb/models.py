@@ -8,6 +8,7 @@
 # Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
 # into your database.
 from __future__ import unicode_literals
+from django.contrib.auth.models import UserManager, AbstractBaseUser, BaseUserManager
 
 from django.db import models
 
@@ -74,20 +75,6 @@ class Query(models.Model):
         managed = False
         db_table = 'Query'
         unique_together = (('qid', 'uid'),)
-
-
-class User(models.Model):
-    uid = models.IntegerField(primary_key=True)
-    username = models.CharField(max_length=255, primary_key=True)
-    password = models.CharField(max_length=255)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255)
-
-    class Meta:
-        managed = False
-        db_table = 'User'
-        unique_together = (('uid', 'username'),)
 
 
 class AuthGroup(models.Model):

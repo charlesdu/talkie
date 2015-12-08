@@ -1,0 +1,45 @@
+body {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.start-page {
+	background-color: #F5F5F5;
+	border: 1px solid #E0E0E0;
+	border-radius: 5px;
+	margin: 50px auto;
+	padding: 10px;
+	width: 500px;
+}
+
+.welcome-header {
+	text-align: center;
+	margin-bottom: 10px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300px;
+}
+
+.login-button {
+	width: 400px;
+	background-color: #03A9F4;
+	color: white;
+	font-weight: bold;
+}
+
+.start-container {
+	width: 400px;
+	margin: 0px auto;
+}
+
+.error-login {
+	color: #E53935;
+}
+
+p {
+	text-align: center;
+}
+
+.slogan p {
+	font-size: 17px;
+}
+
