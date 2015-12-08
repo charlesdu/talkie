@@ -106,55 +106,13 @@
                           </div>
 
                           <div class="col-md-6">
-                            <p id="director_name">(director name)</p>
+                            <p id="year">(year)</p>
                             <p id="runtime">(runtime)</p>
                             <p id="critic_rating">(critic rating)</p>
                             <p id="audience_rating">(audience rating)</p>
                           </div>
                         </div>
                     </div>
-
-                    <div class="panel panel-default">
-                      <div class="cast-container">
-                        <div class="cast">
-                          <div class="col-md-4">
-                            <p><strong>Tom Hanks</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Forrest Gump</p>
-                          </div>
-
-                          <div class="col-md-4">
-                            <p><strong>Sally Field</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Mrs. Gump</p>
-                          </div>
-
-                          <div class="col-md-4">
-                            <p><strong>Rebecca Williams</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Nurse at Park Bench</p>
-                          </div>
-
-                        </div>
-
-                         <div class="cast">
-                          <div class="col-md-4">
-                            <p><strong>Tom Hanks</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Forrest Gump</p>
-                          </div>
-
-                          <div class="col-md-4">
-                            <p><strong>Sally Field</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Mrs. Gump</p>
-                          </div>
-
-                          <div class="col-md-4">
-                            <p><strong>Rebecca Williams</strong></p>
-                            <p style="text-indent:10px; font-size:10px;">as Nurse at Park Bench</p>
-                          </div>
-
-                        </div>
-                      </div>
-
-                    </div>
-
                   </div>
                   
                 </div>
@@ -293,6 +251,10 @@
       modal.find('.modal-title').text(movie.fields.name);
       modal.find('.modal_image').attr("src",movie.fields.image_url);
       modal.find('div.movie-desc p').text(movie.fields.description);
+      modal.find('div.movie-info #year').text(movie.fields.year);
+      modal.find('div.movie-info #runtime').text(movie.fields.runtime);
+      modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
+      modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
     });
 
 
