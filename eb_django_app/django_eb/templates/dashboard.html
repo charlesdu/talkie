@@ -1,9 +1,6 @@
 {% extends 'layout.html' %}
-
+{% load static from staticfiles %}
 {% block content %}
-	<h2>Say "Show me movies featuring _______" (e.g. "Tom Hanks")!</h2>
-	<h4 id="actor_info"></h4>
-
 	<div id="results">
 		<span id="final_span"></span>
 		<span id="interim_span"></span>
@@ -39,14 +36,14 @@
 
       <br>
 
-      <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-info btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+      <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
 
       <br>
 
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Start Speaking Now...">
+            <input id="query_input" type="text" class="form-control" placeholder="Click the microphone above to say a query. Try something like 'Show me movies featuring Tom Hanks' ">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
             </span>
@@ -55,127 +52,26 @@
       </div><!-- /.row -->
 
       <br><br>
-        <div class="row">
-          <div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
-            <center><h3>Search Results</h3></center>
-          </div>
-      </div>
-
-      <br><br>
-
-      <!-- first row of results -->
       <div class="row">
-        <div class = "col-md-2 col-lg-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-         
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
+        <div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
+          <center><h3>Search Results</h3></center>
         </div>
       </div>
 
       <br><br>
 
-      <!-- second row of results -->
-      <div class="row">
-        <div class = "col-md-2 col-lg-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-         
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
-
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <div class="panel-heading">Movie Name</div>
-
-            <div class="panel-body">
-              <a href="#">
-                  <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-                </a>
-            </div>
-          </div> 
-        </div>
+      <div id="results_container">
       </div>
 
 
 
       <!-- Modal to display search results -->
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div id="modal_result" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h2 class="modal-title">Forrest Gump</h2></center>
+                <center><h2 class="modal-title"></h2></center>
               </div>
 
               <div class = "modal-body">
@@ -185,7 +81,7 @@
 
                      <div class="panel-body">
                         <a href="#">
-                            <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                            <img src="{% static 'images/forrest_gump.jpg' %}" class="modal_image img-thumbnail img-responsive">
                           </a>
                       </div>
 
@@ -203,19 +99,17 @@
                     <div class="panel panel-default">
                         <div class="movie-info">
                           <div class="col-md-6">
-                            <p><strong>Director</strong></p>
-                            <p><strong>Release Date</strong></p>
-                            <p><strong>Genre</strong></p>
+                            <p><strong>Year</strong></p>
                             <p><strong>Runtime</strong></p>
-                            <p><strong>User Rating</strong></p>
+                            <p><strong>Critic Rating</strong></p>
+                            <p><strong>Audience Rating</strong></p>
                           </div>
 
                           <div class="col-md-6">
-                            <p>(director name)</p>
-                            <p>(release date)</p>
-                            <p>(genres)</p>
-                            <p>(run time)</p>
-                            <p>(rating)</p>
+                            <p id="director_name">(director name)</p>
+                            <p id="runtime">(runtime)</p>
+                            <p id="critic_rating">(critic rating)</p>
+                            <p id="audience_rating">(audience rating)</p>
                           </div>
                         </div>
                     </div>
@@ -275,6 +169,7 @@
 		var recognizing = false;
 		var ignore_onend;
 		var start_timestamp;
+    var movie_results;
 		if (!('webkitSpeechRecognition' in window)) {
 			upgrade();
 		} else {
@@ -306,6 +201,7 @@
 			};
 			recognition.onresult = function(event) {
 				var interim_transcript = '';
+        document.getElementById('query_input').value = '';
 				for (var i = event.resultIndex; i < event.results.length; ++i) {
 					if (event.results[i].isFinal) {
 						final_transcript += event.results[i][0].transcript;
@@ -314,7 +210,41 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
-								$('#actor_info').text("One of these movies is: \n"+json);
+                movie_results = json;
+                for (var i=0; i<json.length; i++) {
+                  if(i==0) { 
+                    $('#results_container').append("<div class=\"row\">"); 
+                  }
+                  else if(i != 1 && i % 4 == 0) {
+                    $('#results_container').append("</div> <div class=\"row\">");
+                  }
+
+								  if(i%4 == 0) {
+                    $('#results_container').append("<div id=" + i + " class = \"col-md-2 col-lg-offset-2\">" +
+                                                  "<div class=\"panel panel-default\">" +
+                                                    "<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+                                                    "<div class=\"panel-body\">" +
+                                                      "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
+                                                        "<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+                                                      "</a>" +
+                                                    "</div>" +
+                                                  "</div>" +
+                                                "</div>");
+                  }
+                  else {
+                    $('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
+                                                  "<div class=\"panel panel-default\">" +
+                                                    "<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+                                                    "<div class=\"panel-body\">" +
+                                                      "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
+                                                        "<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+                                                      "</a>" +
+                                                    "</div>" +
+                                                  "</div>" +
+                                                "</div>");
+                  }
+                 
+                }
 							},
 							error : function(xhr,errmsg,err) {
 
@@ -326,7 +256,9 @@
 				}
 				final_transcript = capitalize(final_transcript);
 				final_span.innerHTML = linebreak(final_transcript);
+        document.getElementById('query_input').value = linebreak(final_transcript);
 				interim_span.innerHTML = linebreak(interim_transcript);
+        document.getElementById('query_input').value = linebreak(interim_transcript);
 			};
 		}
 
@@ -353,5 +285,16 @@
 			interim_span.innerHTML = '';
 			start_timestamp = event.timeStamp;
 		}
+
+    $('#modal_result').on('show.bs.modal', function (event) {
+      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      var modal = $(this);
+      var movie = movie_results[clicked_id];
+      modal.find('.modal-title').text(movie.fields.name);
+      modal.find('.modal_image').attr("src",movie.fields.image_url);
+      modal.find('div.movie-desc p').text(movie.fields.description);
+    });
+
+
 	</script>
 {% endblock %}

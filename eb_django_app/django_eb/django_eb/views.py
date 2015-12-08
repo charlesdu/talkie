@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.db import IntegrityError
+from pprint import pprint
+from django.core import serializers
 
 from models import *
 from utils import *
@@ -52,10 +54,11 @@ def dashboard(request):
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
 		movie = movies[0].name
-		print movie
+		print pprint(vars(movies[0]))
+		print type(movies)
 
 		return HttpResponse(
-			json.dumps(movie),
+			serializers.serialize('json', movies),
 			content_type = "application/json"
 		)
 	else:
