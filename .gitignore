@@ -6,10 +6,3 @@
 
 # Python
 *.pyc
-eb_django_app/django_eb/django_eb/*.pyc
-eb_django_app/django_eb/django_eb/models.pyc
-eb_django_app/django_eb/django_eb/settings.pyc
-eb_django_app/django_eb/django_eb/urls.pyc
-eb_django_app/django_eb/django_eb/utils.pyc
-eb_django_app/django_eb/django_eb/views.pyc
-eb_django_app/django_eb/django_eb/wsgi.pyc
