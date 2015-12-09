@@ -15,18 +15,15 @@ from utils import *
 def logout(request):
 	auth_logout(request)
 	context = RequestContext(request, {})
-	return render(request, 'login.html', context)
+	return redirect('/')
 
 def login(request):
-	if request.user.is_authenticated():
-		return redirect('/dashboard')
-	elif request.method == 'POST':
+	if request.method == 'POST':
 		user = authenticate(username=request.POST['username'], password=request.POST['pwd'])
 		if user is not None:
 			if user.is_active:
 				auth_login(request, user)
-				context = RequestContext(request, {})
-				return render(request, 'dashboard.html', context)
+				return redirect('/dashboard')
 			else:
 				context = RequestContext(request, {'error': "This account has been disabled. Please try a different account."})
 				return render(request, 'login.html', context)
@@ -48,7 +45,7 @@ def sign_up(request):
 			else:
 				user.save()
 				context = RequestContext(request, {})
-				return render(request, 'dashboard.html', context)
+				return redirect('/dashboard ')
 		else:
 			context = RequestContext(request, {'error': "The passwords do not match. Please try again."})
 			return render(request, 'sign_up.html', context)        
@@ -56,8 +53,9 @@ def sign_up(request):
 		context = RequestContext(request, {})
 		return render(request, 'sign_up.html', context)
 
-@login_required
 def dashboard(request):
+	if not request.user.is_authenticated():
+		return redirect('/')
 	if request.method == 'POST':
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
