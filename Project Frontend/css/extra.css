@@ -1,7 +1,4 @@
-.up {
-  position: absolute;
-  top: 50%;
-}
+
 
 #bs-example-navbar-collapse-1 a:hover {
   color: #00B0F0;
@@ -157,4 +154,17 @@ hr {
     /* to hide the lines from behind the text, you have to set the background color the same as the container */ 
     background: #fff; 
     padding: 0 15px; 
+}
+
+.searches a {
+  color: black;
+}
+
+.search a:hover {
+  text-decoration: none;
+}
+
+.list-group-item:hover {
+  background-color: #EEEEEE;
+  text-decoration: none;
 }
