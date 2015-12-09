@@ -1,4 +1,7 @@
 import json
+import nltk
+import nltk.data
+
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import *
@@ -62,6 +65,9 @@ def dashboard(request):
 	if request.method == 'POST':
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
+		if movies == "Recommendations":
+			# INSERT RECOMMENDATION GENERATOR
+			movies = None
 		return HttpResponse(
 			json.dumps(movies),
 			content_type = "application/json"
