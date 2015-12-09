@@ -98,7 +98,7 @@
 
       {% endfor %}
     {% endif %}
-    </div>
+    </div></div>
 
 
 		<div id="results_container">
@@ -159,7 +159,23 @@
 		var recognizing = false;
 		var ignore_onend;
 		var start_timestamp;
-	var movie_results;
+    var movie_results;
+    var is_initial=true;
+    var initial_recs = [];
+    {% if initial_recommendations %}
+      {% for m in initial_recommendations %}
+        initial_recs.push({mid: {{m.mid}} ,
+                            name: "{{m.name}}",
+                            description: "{{m.description}}",
+                            year: "{{m.year}}",
+                            critic_rating: {{m.critic_rating}},
+                            audience_rating: {{m.audience_rating}},
+                            runtime: {{m.runtime}},
+                            image_url: "{{m.image_url}}"
+                     });
+      {% endfor %}
+    {% endif %}
+
 		if (!('webkitSpeechRecognition' in window)) {
 			upgrade();
 		} else {
@@ -200,7 +216,9 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
-				movie_results = json;
+				$('#results_container').empty();
+        $('#initial_recommendations_container').empty();
+        movie_results = json;
 				for (var i=0; i<json.length; i++) {
 				  if(i==0) { 
 					$('#results_container').append("<div class=\"row\">"); 
@@ -270,6 +288,7 @@
 			final_transcript = '';
 			recognition.lang = "en-US";
 			recognition.start();
+      is_initial = false;
 			ignore_onend = false;
 			final_span.innerHTML = '';
 			interim_span.innerHTML = '';
@@ -277,16 +296,30 @@
 		}
 
 	$('#modal_result').on('show.bs.modal', function (event) {
-	  var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
-	  var modal = $(this);
-	  var movie = movie_results[clicked_id];
-	  modal.find('.modal-title').text(movie.fields.name);
-	  modal.find('.modal_image').attr("src",movie.fields.image_url);
-	  modal.find('div.movie-desc p').text(movie.fields.description);
-	  modal.find('div.movie-info #year').text(movie.fields.year);
-	  modal.find('div.movie-info #runtime').text(movie.fields.runtime);
-	  modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
-	  modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
+    if(is_initial) {
+      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      var modal = $(this);
+      var movie = initial_recs[clicked_id];
+      modal.find('.modal-title').text(movie.name);
+      modal.find('.modal_image').attr("src",movie.image_url);
+      modal.find('div.movie-desc p').text(movie.description);
+      modal.find('div.movie-info #year').text(movie.year);
+      modal.find('div.movie-info #runtime').text(movie.runtime);
+      modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+    }
+    else {
+      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      var modal = $(this);
+      var movie = movie_results[clicked_id];
+      modal.find('.modal-title').text(movie.fields.name);
+      modal.find('.modal_image').attr("src",movie.fields.image_url);
+      modal.find('div.movie-desc p').text(movie.fields.description);
+      modal.find('div.movie-info #year').text(movie.fields.year);
+      modal.find('div.movie-info #runtime').text(movie.fields.runtime);
+      modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
+      modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
+    }
 	});
 
 
