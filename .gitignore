@@ -6,3 +6,4 @@
 
 # Python
 *.pyc
+eb_django_app/django_eb/django_eb/*.pyc

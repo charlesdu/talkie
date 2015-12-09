@@ -1,7 +1,6 @@
 import json
 
 from models import *
-from text2num import text2num
 
 
 # A list of split terms that a user can ask

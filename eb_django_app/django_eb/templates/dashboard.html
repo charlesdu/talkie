@@ -1,133 +1,125 @@
 {% extends 'layout.html' %}
+
 {% load static from staticfiles %}
+
 {% block content %}
 	<div id="results">
 		<span id="final_span"></span>
 		<span id="interim_span"></span>
 	</div>
 
-  <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><img src="{% static 'images/logo_no_waves.png' %}" style="width:55px; height:auto;"></a>
-        </div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			<a class="navbar-brand" href="#"><img src="{% static 'images/logo_no_waves.png' %}" style="width:55px; height:auto;"></a>
+			</div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">User Profile</a></li>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">User Profile</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
 
-    <div class="container">
-      <div class="row">
-        <h1 class="text-center"><img src="{% static 'images/logo_no_waves.png' %}" style="width:150px; height:auto;"></h1>
-      </div>
+	<div class="container">
+		<div class="row">
+			<h1 class="text-center"><img src="{% static 'images/logo_no_waves.png' %}" style="width:150px; height:auto;"></h1>
+		</div>
 
-      <br>
+		<br>
 
-      <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+		<center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
 
-      <br>
+		<br>
 
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-          <div class="input-group">
-            <input id="query_input" type="text" class="form-control" placeholder="Click the microphone above to say a query. Try something like 'Show me movies featuring Tom Hanks' ">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
-            </span>
-          </div><!-- /input-group -->
-        </div><!-- /.col-lg-10 -->
-      </div><!-- /.row -->
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2">
+				<div class="input-group">
+					<input id="query_input" type="text" class="form-control" placeholder="Click the microphone above to say a query. Try something like 'Show me movies featuring Tom Hanks' ">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
+					</span>
+				</div>
+			</div>
+		</div>
 
-      <br><br>
-      <div class="row">
-        <div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
-          <center><h3>Search Results</h3></center>
-        </div>
-      </div>
+		<br><br>
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
+				<center><h3>Search Results</h3></center>
+			</div>
+		</div>
 
-      <br><br>
+		<br><br>
 
-      <div id="results_container">
-      </div>
+		<div id="results_container">
+		</div>
 
+		<!-- Modal to display search results -->
+		<div id="modal_result" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<center><h2 class="modal-title"></h2></center>
+					</div>
 
+					<div class = "modal-body">
+						<div class="row">
+							<div class = "col-md-5">
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<a href="#"><img src="{% static 'images/forrest_gump.jpg' %}" class="modal_image img-thumbnail img-responsive"></a>
+									</div>
+								</div> 
+							</div>
 
-      <!-- Modal to display search results -->
-      <div id="modal_result" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <center><h2 class="modal-title"></h2></center>
-              </div>
-
-              <div class = "modal-body">
-                <div class="row">
-                   <div class = "col-md-5">
-                    <div class="panel panel-default">
-
-                     <div class="panel-body">
-                        <a href="#">
-                            <img src="{% static 'images/forrest_gump.jpg' %}" class="modal_image img-thumbnail img-responsive">
-                          </a>
-                      </div>
-
-                    </div> 
-                   </div>
-
-                   <div class = "col-md-7">
-                    <div class="panel panel-default">
-                        <div class="movie-desc">
-                          <h4 style=>Overview</h4>
-                          <p>A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="movie-info">
-                          <div class="col-md-6">
-                            <p><strong>Year</strong></p>
-                            <p><strong>Runtime</strong></p>
-                            <p><strong>Critic Rating</strong></p>
-                            <p><strong>Audience Rating</strong></p>
-                          </div>
-
-                          <div class="col-md-6">
-                            <p id="year">(year)</p>
-                            <p id="runtime">(runtime)</p>
-                            <p id="critic_rating">(critic rating)</p>
-                            <p id="audience_rating">(audience rating)</p>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-  </div>
+							<div class = "col-md-7">
+								<div class="panel panel-default">
+									<div class="movie-desc">
+										<h4 style=>Overview</h4>
+										<p>A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="movie-info">
+										<div class="col-md-6">
+											<p><strong>Year</strong></p>
+											<p><strong>Runtime</strong></p>
+											<p><strong>Critic Rating</strong></p>
+											<p><strong>Audience Rating</strong></p>
+										</div>
+										<div class="col-md-6">
+											<p id="year">(year)</p>
+											<p id="runtime">(runtime)</p>
+											<p id="critic_rating">(critic rating)</p>
+											<p id="audience_rating">(audience rating)</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		var final_transcript = '';
 		var recognizing = false;
 		var ignore_onend;
 		var start_timestamp;
-    var movie_results;
+	var movie_results;
 		if (!('webkitSpeechRecognition' in window)) {
 			upgrade();
 		} else {
@@ -153,13 +145,13 @@
 				if (window.getSelection) {
 					window.getSelection().removeAllRanges();
 					var range = document.createRange();
-					range.selectNode(document.getElementById('final_span'));
+					range.selectNode(document.getElementById('query_input'));
 					window.getSelection().addRange(range);
 				}
 			};
 			recognition.onresult = function(event) {
 				var interim_transcript = '';
-        document.getElementById('query_input').value = '';
+				document.getElementById('query_input').value = '';
 				for (var i = event.resultIndex; i < event.results.length; ++i) {
 					if (event.results[i].isFinal) {
 						final_transcript += event.results[i][0].transcript;
@@ -168,41 +160,41 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
-                movie_results = json;
-                for (var i=0; i<json.length; i++) {
-                  if(i==0) { 
-                    $('#results_container').append("<div class=\"row\">"); 
-                  }
-                  else if(i != 1 && i % 4 == 0) {
-                    $('#results_container').append("</div> <div class=\"row\">");
-                  }
+				movie_results = json;
+				for (var i=0; i<json.length; i++) {
+				  if(i==0) { 
+					$('#results_container').append("<div class=\"row\">"); 
+				  }
+				  else if(i != 1 && i % 4 == 0) {
+					$('#results_container').append("</div> <div class=\"row\">");
+				  }
 
 								  if(i%4 == 0) {
-                    $('#results_container').append("<div id=" + i + " class = \"col-md-2 col-lg-offset-2\">" +
-                                                  "<div class=\"panel panel-default\">" +
-                                                    "<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
-                                                    "<div class=\"panel-body\">" +
-                                                      "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-                                                        "<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
-                                                      "</a>" +
-                                                    "</div>" +
-                                                  "</div>" +
-                                                "</div>");
-                  }
-                  else {
-                    $('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
-                                                  "<div class=\"panel panel-default\">" +
-                                                    "<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
-                                                    "<div class=\"panel-body\">" +
-                                                      "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-                                                        "<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
-                                                      "</a>" +
-                                                    "</div>" +
-                                                  "</div>" +
-                                                "</div>");
-                  }
-                 
-                }
+					$('#results_container').append("<div id=" + i + " class = \"col-md-2 col-lg-offset-2\">" +
+												  "<div class=\"panel panel-default\">" +
+													"<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+													"<div class=\"panel-body\">" +
+													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
+														"<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+													  "</a>" +
+													"</div>" +
+												  "</div>" +
+												"</div>");
+				  }
+				  else {
+					$('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
+												  "<div class=\"panel panel-default\">" +
+													"<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+													"<div class=\"panel-body\">" +
+													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
+														"<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+													  "</a>" +
+													"</div>" +
+												  "</div>" +
+												"</div>");
+				  }
+				 
+				}
 							},
 							error : function(xhr,errmsg,err) {
 
@@ -214,9 +206,9 @@
 				}
 				final_transcript = capitalize(final_transcript);
 				final_span.innerHTML = linebreak(final_transcript);
-        document.getElementById('query_input').value = linebreak(final_transcript);
+		document.getElementById('query_input').value = linebreak(final_transcript);
 				interim_span.innerHTML = linebreak(interim_transcript);
-        document.getElementById('query_input').value = linebreak(interim_transcript);
+		document.getElementById('query_input').value = linebreak(interim_transcript);
 			};
 		}
 
@@ -244,18 +236,18 @@
 			start_timestamp = event.timeStamp;
 		}
 
-    $('#modal_result').on('show.bs.modal', function (event) {
-      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
-      var modal = $(this);
-      var movie = movie_results[clicked_id];
-      modal.find('.modal-title').text(movie.fields.name);
-      modal.find('.modal_image').attr("src",movie.fields.image_url);
-      modal.find('div.movie-desc p').text(movie.fields.description);
-      modal.find('div.movie-info #year').text(movie.fields.year);
-      modal.find('div.movie-info #runtime').text(movie.fields.runtime);
-      modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
-      modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
-    });
+	$('#modal_result').on('show.bs.modal', function (event) {
+	  var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+	  var modal = $(this);
+	  var movie = movie_results[clicked_id];
+	  modal.find('.modal-title').text(movie.fields.name);
+	  modal.find('.modal_image').attr("src",movie.fields.image_url);
+	  modal.find('div.movie-desc p').text(movie.fields.description);
+	  modal.find('div.movie-info #year').text(movie.fields.year);
+	  modal.find('div.movie-info #runtime').text(movie.fields.runtime);
+	  modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
+	  modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
+	});
 
 
 	</script>
