@@ -38,7 +38,7 @@
 
 		<br>
 
-		<center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+    <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
 
 		<br>
 
@@ -61,6 +61,45 @@
 		</div>
 
 		<br><br>
+
+    <div id="initial_recommendations_container">
+    {% if initial_recommendations %}
+      {% for m in initial_recommendations %}
+          
+          {% if forloop.counter0 == 0 %}  
+            <div class="row"> 
+          {% elif forloop.counter0 != 1 and forloop.counter0|divisibleby:4 %} 
+            </div> <div class="row">
+          {% endif %}
+
+          {% if forloop.counter0|divisibleby:4 %}
+            <div id={{ forloop.counter0 }}  class ="col-md-2 col-lg-offset-2">
+              <div class="panel panel-default">
+                <div class="panel-heading"> {{ m.name }} </div>
+                <div class="panel-body">
+                  <a data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div id={{ forloop.counter0 }}  class ="col-md-2">
+              <div class="panel panel-default">
+                <div class="panel-heading"> {{ m.name }} </div>
+                <div class="panel-body">
+                  <a data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+      {% endfor %}
+    {% endif %}
+    </div></div>
+
 
 		<div id="results_container">
 		</div>
@@ -120,7 +159,23 @@
 		var recognizing = false;
 		var ignore_onend;
 		var start_timestamp;
-	var movie_results;
+    var movie_results;
+    var is_initial=true;
+    var initial_recs = [];
+    {% if initial_recommendations %}
+      {% for m in initial_recommendations %}
+        initial_recs.push({mid: {{m.mid}} ,
+                            name: "{{m.name}}",
+                            description: "{{m.description}}",
+                            year: "{{m.year}}",
+                            critic_rating: {{m.critic_rating}},
+                            audience_rating: {{m.audience_rating}},
+                            runtime: {{m.runtime}},
+                            image_url: "{{m.image_url}}"
+                     });
+      {% endfor %}
+    {% endif %}
+
 		if (!('webkitSpeechRecognition' in window)) {
 			upgrade();
 		} else {
@@ -161,8 +216,9 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
-								console.log(json);
-				movie_results = json;
+				$('#results_container').empty();
+        $('#initial_recommendations_container').empty();
+        movie_results = json;
 				for (var i=0; i<json.length; i++) {
 				  if(i==0) { 
 					$('#results_container').append("<div class=\"row\">"); 
@@ -232,6 +288,7 @@
 			final_transcript = '';
 			recognition.lang = "en-US";
 			recognition.start();
+      is_initial = false;
 			ignore_onend = false;
 			final_span.innerHTML = '';
 			interim_span.innerHTML = '';
@@ -239,17 +296,30 @@
 		}
 
 	$('#modal_result').on('show.bs.modal', function (event) {
-	  var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
-	  var modal = $(this);
-	  var movie = movie_results[clicked_id];
-	  console.log(movie);
-	  modal.find('.modal-title').text(movie.name);
-	  modal.find('.modal_image').attr("src",movie.image_url);
-	  modal.find('div.movie-desc p').text(movie.description);
-	  modal.find('div.movie-info #year').text(movie.year);
-	  modal.find('div.movie-info #runtime').text(movie.runtime);
-	  modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
-	  modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+    if(is_initial) {
+      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      var modal = $(this);
+      var movie = initial_recs[clicked_id];
+      modal.find('.modal-title').text(movie.name);
+      modal.find('.modal_image').attr("src",movie.image_url);
+      modal.find('div.movie-desc p').text(movie.description);
+      modal.find('div.movie-info #year').text(movie.year);
+      modal.find('div.movie-info #runtime').text(movie.runtime);
+      modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+    }
+    else {
+      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      var modal = $(this);
+      var movie = movie_results[clicked_id];
+      modal.find('.modal-title').text(movie.name);
+      modal.find('.modal_image').attr("src",movie.image_url);
+      modal.find('div.movie-desc p').text(movie.description);
+      modal.find('div.movie-info #year').text(movie.year);
+      modal.find('div.movie-info #runtime').text(movie.runtime);
+      modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+    }
 	});
 
 
