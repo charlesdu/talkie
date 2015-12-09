@@ -34,7 +34,6 @@ def login(request):
 			context = RequestContext(request, {'error': "Username and password combination not found. Please try again."})
 			return render(request, 'login.html', context)
 	else:
-		print "hasdfhadsjhfsadf"
 		context = RequestContext(request, {})
 		return render(request, 'login.html', context)
 
@@ -71,6 +70,25 @@ def dashboard(request):
 			content_type = "application/json"
 		)
 	else:
-		print "hjere"
-		context = RequestContext(request, {})
+		user_ratings = UserRating.objects.filter(uid=request.user.id)
+		print "number of user ratings: "+str(len(user_ratings))
+		movies = [];
+		for rating in user_ratings:
+			movie_rec = recommendation(rating.mid_id, rating.rating)
+			for m in movie_rec:
+				if m.mid != rating.mid_id:
+					movies.append(m)
+				if(len(movies)>=20):
+					break
+			if(len(movies)>=20):
+				break
+		
+		print "len of initial recs: "+str(len(movies))
+		if len(movies) < 20:
+			number = 20 - len(movies)
+			filler = RecRating.objects.order_by('rating')[:number]
+			for f in filler:
+				movies.append(f.mid)
+
+		context = RequestContext(request, {'initial_recommendations':movies})
 		return render(request, 'dashboard.html', context)

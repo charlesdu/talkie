@@ -38,7 +38,7 @@
 
 		<br>
 
-		<center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+    <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
 
 		<br>
 
@@ -61,6 +61,45 @@
 		</div>
 
 		<br><br>
+
+    <div id="initial_recommendations_container">
+    {% if initial_recommendations %}
+      {% for m in initial_recommendations %}
+          
+          {% if forloop.counter0 == 0 %}  
+            <div class="row"> 
+          {% elif forloop.counter0 != 1 and forloop.counter0|divisibleby:4 %} 
+            </div> <div class="row">
+          {% endif %}
+
+          {% if forloop.counter0|divisibleby:4 %}
+            <div id={{ forloop.counter0 }}  class ="col-md-2 col-lg-offset-2">
+              <div class="panel panel-default">
+                <div class="panel-heading"> {{ m.name }} </div>
+                <div class="panel-body">
+                  <a data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div id={{ forloop.counter0 }}  class ="col-md-2">
+              <div class="panel panel-default">
+                <div class="panel-heading"> {{ m.name }} </div>
+                <div class="panel-body">
+                  <a data-toggle="modal" data-target=".bs-example-modal-lg">
+                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+      {% endfor %}
+    {% endif %}
+    </div>
+
 
 		<div id="results_container">
 		</div>

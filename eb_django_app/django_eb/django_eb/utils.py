@@ -1,6 +1,7 @@
 import json
 
 from models import *
+from pprint import pprint
 
 
 # A list of split terms that a user can ask
@@ -30,14 +31,25 @@ database_fields = {
 }
 
 
-def recommendation(movie_id):
+def recommendation(movie_id, r):
 	#Find all other users in rec_rating that have rated this movie 5 stars
-	other_users = RecRating.objects.filter(mid = movie_id, rating = 5);
-	print other_users
+	other_users = RecRating.objects.filter(mid = movie_id, rating = r);
+
+	movies = []
 
 	#Find the movies that each of the users above rate 5 stars, and recommend those
-	for user in other_users:
-		movies = RecRating.objects.filter(uid = user.uid, rating = 5);
+	for i in range(len(other_users)):
+		user = other_users[i]
+		user_movies = RecRating.objects.filter(uid = user.uid, rating = 5)
+		
+		for j in range(len(user_movies)):
+			movies.append(user_movies[j].mid)
+			if(len(movies) >= 25):
+				break
+		if(len(movies) >= 25):
+			break
+
+	return movies
 
 
 # Parses a query into specific terms that can be queried in the database
