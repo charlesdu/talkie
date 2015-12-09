@@ -30,6 +30,16 @@ database_fields = {
 }
 
 
+def recommendation(movie_id):
+	#Find all other users in rec_rating that have rated this movie 5 stars
+	other_users = RecRating.objects.filter(mid = movie_id, rating = 5);
+	print other_users
+
+	#Find the movies that each of the users above rate 5 stars, and recommend those
+	for user in other_users:
+		movies = RecRating.objects.filter(uid = user.uid, rating = 5);
+
+
 # Parses a query into specific terms that can be queried in the database
 # Input: a query string
 # Returns: object containing table to search, search requirements, and search terms
@@ -83,4 +93,9 @@ def run_NLP(query):
 	movies = db_query(terms)
 	# json = format_movie_object(movies)
 	json = movies
+
 	return json
+
+
+
+

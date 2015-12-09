@@ -66,16 +66,25 @@ class MovieDirector(models.Model):
         unique_together = (('mid', 'did'),)
 
 
-class Query(models.Model):
-    qid = models.IntegerField(primary_key=True)
-    uid = models.ForeignKey('User', db_column='uid', primary_key=True)
-    text = models.CharField(max_length=255, blank=True, null=True)
+class RecRating(models.Model):
+    uid = models.IntegerField(primary_key=True)
+    mid = models.ForeignKey('Movie', db_column='mid')
+    rating = models.FloatField()
 
     class Meta:
-        managed = False
-        db_table = 'Query'
-        unique_together = (('qid', 'uid'),)
+        managed = True
+        db_table = 'RecRating'
+        unique_together = (('uid', 'mid'),)
 
+class UserRating(models.Model):
+    uid = models.ForeignKey('AuthUser', db_column='id', primary_key=True)
+    mid = models.ForeignKey('Movie', db_column='mid')
+    rating = models.FloatField()
+
+    class Meta:
+        managed = True
+        db_table = 'UserRating'
+        unique_together = (('uid', 'mid'),)
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=80)
@@ -92,7 +101,6 @@ class AuthGroupPermissions(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_group_permissions'
-        unique_together = (('group_id', 'permission_id'),)
 
 
 class AuthPermission(models.Model):
@@ -103,7 +111,6 @@ class AuthPermission(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_permission'
-        unique_together = (('content_type_id', 'codename'),)
 
 
 class AuthUser(models.Model):
@@ -123,6 +130,16 @@ class AuthUser(models.Model):
         db_table = 'auth_user'
 
 
+class Query(models.Model):
+    qid = models.IntegerField(primary_key=True)
+    uid = models.ForeignKey('AuthUser', db_column='id', primary_key=True)
+    text = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Query'
+        unique_together = (('qid', 'uid'),)
+
 class AuthUserGroups(models.Model):
     user = models.ForeignKey(AuthUser)
     group = models.ForeignKey(AuthGroup)
@@ -130,7 +147,6 @@ class AuthUserGroups(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_user_groups'
-        unique_together = (('user_id', 'group_id'),)
 
 
 class AuthUserUserPermissions(models.Model):
@@ -140,7 +156,6 @@ class AuthUserUserPermissions(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
-        unique_together = (('user_id', 'permission_id'),)
 
 
 class DjangoAdminLog(models.Model):
