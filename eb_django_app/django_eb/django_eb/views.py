@@ -34,7 +34,6 @@ def login(request):
 			context = RequestContext(request, {'error': "Username and password combination not found. Please try again."})
 			return render(request, 'login.html', context)
 	else:
-		print "hasdfhadsjhfsadf"
 		context = RequestContext(request, {})
 		return render(request, 'login.html', context)
 
@@ -63,14 +62,10 @@ def dashboard(request):
 	if request.method == 'POST':
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
-		movie = movies[0].name
-		print pprint(vars(movies[0]))
-
 		return HttpResponse(
-			serializers.serialize('json', movies),
+			json.dumps(movies),
 			content_type = "application/json"
 		)
 	else:
-		print "hjere"
 		context = RequestContext(request, {})
 		return render(request, 'dashboard.html', context)

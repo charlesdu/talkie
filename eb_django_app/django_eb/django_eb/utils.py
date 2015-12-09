@@ -1,7 +1,9 @@
-import json
+import json, re
 
 from models import *
-
+from django.db import connection
+from text2num import *
+from pprint import pprint
 
 # A list of split terms that a user can ask
 action_terms = {
@@ -29,15 +31,39 @@ database_fields = {
 	'limit': None,
 }
 
+# Fetchall helper for SQL queries
+def dictfetchall(cursor):
+	columns = [col[0] for col in cursor.description]
+	return [
+		dict(zip(columns, row))
+		for row in cursor.fetchall()
+	]
+
 
 def recommendation(movie_id):
 	#Find all other users in rec_rating that have rated this movie 5 stars
 	other_users = RecRating.objects.filter(mid = movie_id, rating = 5);
-	print other_users
 
 	#Find the movies that each of the users above rate 5 stars, and recommend those
 	for user in other_users:
 		movies = RecRating.objects.filter(uid = user.uid, rating = 5);
+
+
+# Determines if a query follows the correct structure
+# Input: a query string and a pattern string
+# Returns: boolean if the query matches
+def match(query, pattern):
+	# ~ = any number of words [greedy]
+	# ! = exactly one word
+	# @ = any number of words [lazy]
+	query = query.strip().lower()
+	pattern = pattern.strip().lower()
+	pattern = pattern.replace("~", "(.*)")
+	pattern = pattern.replace("!", '([^\s]+)')
+	pattern = pattern.replace("@", "(.*?)")
+	pattern = pattern.replace(" ", "\s*")
+	print pattern
+	return re.match(pattern, query)
 
 
 # Parses a query into specific terms that can be queried in the database
@@ -46,10 +72,19 @@ def recommendation(movie_id):
 def parse_query(query):
 	db_fields = database_fields.copy()
 	query = query.strip().lower()
-	query_array = query.split()
-	for i in range(len(query_array)):
-		if query_array[i] == 'featuring':
-			db_fields['actor-name'] = query_array[i+1] + ' ' + query_array[i+2]
+	# Show me [number] movies
+	if match(query, "Show me ! movies ~"):
+		m = match(query, "Show me ! movies ~")
+		if m.group(1) == "all":
+			db_fields['limit'] = None
+		elif m.group(1).isdigit():
+			db_fields['limit'] = int(m.group(1))
+		else:
+			db_fields['limit'] = text2num(m.group(1))
+	# Show me movies featuring [actors]
+	if match(query, "Show me @ movies featuring ~"):
+		m = match(query, "Show me @ movies featuring ~")
+		db_fields['actor-name'] = m.group(2)
 	return db_fields
 
 
@@ -57,33 +92,23 @@ def parse_query(query):
 # Input: a terms object containing table to search, search requirements, and search terms
 # Returns: object containing all the movies that match the terms, and an optional error term
 def db_query(terms):
+	pprint(terms)
 	movies = {}
+	cursor = connection.cursor()
+	query = """SELECT DISTINCT M.mid, M.name, M.description, M.year, M.critic_rating, M.audience_rating, M.runtime, M.image_url FROM Movie M
+					INNER JOIN Movie_Actor MA ON M.mid = MA.mid
+					INNER JOIN Actor A ON MA.aid = A.aid
+					INNER JOIN Movie_Director MD ON M.mid = MD.mid
+					INNER JOIN Director D ON MD.did = D.did"""
 	if terms['actor-name'] != None:
-		actor = Actor.objects.get(name = terms['actor-name'])
-		movieIDs = MovieActor.objects.filter(aid = actor.aid).values_list('mid', flat = True).order_by('mid')
-		movies = Movie.objects.filter(mid__in = movieIDs)
+		query += " WHERE A.name LIKE \"%s\"" % terms['actor-name']
+	if terms['limit'] != None:
+		query += " LIMIT %s" % str(terms['limit'])
+	print query
+	cursor.execute(query)
+	movies = dictfetchall(cursor)
 	return movies
 	
-
-# Takes an array of Movie objects and returns formatted json objects
-# Input: array of Movie objects
-# Returns: json object containing relevent data for all the movies in the input array
-def format_movie_object(movies):
-	json = {}
-	for movie in movies:
-		m = {}
-		m['mid'] = movie.mid
-		m['name'] = movie.name
-		m['description'] = movie.description
-		m['year'] = movie.year
-		m['critic_rating'] = movie.critic_rating
-		m['audience_rating'] = movie.audience_rating
-		m['runtime'] = movie.runtime
-		m['image_url'] = movie.image_url
-		json.append(m)
-	print json
-	return json.dumps(json)
-
 
 # Runs NLP on the user's query
 # Input: a query string
@@ -91,11 +116,4 @@ def format_movie_object(movies):
 def run_NLP(query):
 	terms = parse_query(query)
 	movies = db_query(terms)
-	# json = format_movie_object(movies)
-	json = movies
-
-	return json
-
-
-
-
+	return movies

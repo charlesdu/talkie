@@ -161,6 +161,7 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
+								console.log(json);
 				movie_results = json;
 				for (var i=0; i<json.length; i++) {
 				  if(i==0) { 
@@ -173,10 +174,10 @@
 								  if(i%4 == 0) {
 					$('#results_container').append("<div id=" + i + " class = \"col-md-2 col-lg-offset-2\">" +
 												  "<div class=\"panel panel-default\">" +
-													"<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+													"<div class=\"panel-heading\">"+ json[i].name + "</div>" +
 													"<div class=\"panel-body\">" +
 													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-														"<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+														"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
 													  "</a>" +
 													"</div>" +
 												  "</div>" +
@@ -185,10 +186,10 @@
 				  else {
 					$('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
 												  "<div class=\"panel panel-default\">" +
-													"<div class=\"panel-heading\">"+ json[i].fields.name + "</div>" +
+													"<div class=\"panel-heading\">"+ json[i].name + "</div>" +
 													"<div class=\"panel-body\">" +
 													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-														"<img src=\""+ json[i].fields.image_url +"\" class=\"img-thumbnail img-responsive\">" +
+														"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
 													  "</a>" +
 													"</div>" +
 												  "</div>" +
@@ -241,13 +242,14 @@
 	  var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
 	  var modal = $(this);
 	  var movie = movie_results[clicked_id];
-	  modal.find('.modal-title').text(movie.fields.name);
-	  modal.find('.modal_image').attr("src",movie.fields.image_url);
-	  modal.find('div.movie-desc p').text(movie.fields.description);
-	  modal.find('div.movie-info #year').text(movie.fields.year);
-	  modal.find('div.movie-info #runtime').text(movie.fields.runtime);
-	  modal.find('div.movie-info #audience_rating').text(movie.fields.audience_rating);
-	  modal.find('div.movie-info #critic_rating').text(movie.fields.critic_rating);
+	  console.log(movie);
+	  modal.find('.modal-title').text(movie.name);
+	  modal.find('.modal_image').attr("src",movie.image_url);
+	  modal.find('div.movie-desc p').text(movie.description);
+	  modal.find('div.movie-info #year').text(movie.year);
+	  modal.find('div.movie-info #runtime').text(movie.runtime);
+	  modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
+	  modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
 	});
 
 
