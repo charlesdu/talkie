@@ -12,8 +12,11 @@ from django.core import serializers
 from models import *
 from utils import *
 
+global_user=None;
+
 def logout(request):
 	auth_logout(request)
+	global_user = None;
 	context = RequestContext(request, {})
 	return redirect('/')
 
@@ -31,6 +34,7 @@ def login(request):
 			context = RequestContext(request, {'error': "Username and password combination not found. Please try again."})
 			return render(request, 'login.html', context)
 	else:
+		print "hasdfhadsjhfsadf"
 		context = RequestContext(request, {})
 		return render(request, 'login.html', context)
 
@@ -61,12 +65,12 @@ def dashboard(request):
 		movies = run_NLP(query)
 		movie = movies[0].name
 		print pprint(vars(movies[0]))
-		print type(movies)
 
 		return HttpResponse(
 			serializers.serialize('json', movies),
 			content_type = "application/json"
 		)
 	else:
+		print "hjere"
 		context = RequestContext(request, {})
 		return render(request, 'dashboard.html', context)
