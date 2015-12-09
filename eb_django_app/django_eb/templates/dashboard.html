@@ -105,53 +105,94 @@
 		</div>
 
 		<!-- Modal to display search results -->
-		<div id="modal_result" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<center><h2 class="modal-title"></h2></center>
-					</div>
+    <div id="modal_result" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <center>
+              <h2 class="modal-title" style="font-family: 'Oswald', sans-serif; color: #00B0F0"><span>Forrest Gump</span></h2>
+            </center>
+          </div>
 
-					<div class = "modal-body">
-						<div class="row">
-							<div class = "col-md-5">
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<a href="#"><img src="{% static 'images/forrest_gump.jpg' %}" class="modal_image img-thumbnail img-responsive"></a>
-									</div>
-								</div> 
-							</div>
+          <div class = "modal-body">
+            <div class="row">
+               <div class = "col-md-7">
+                <div class="panel panel-default">
+                  <div class="movie-desc">
+                    <div class="title-block" style="width: 175px;"><h4>OVERVIEW</h4></div>
+                    <p>A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
+                  </div>
+                </div>
 
-							<div class = "col-md-7">
-								<div class="panel panel-default">
-									<div class="movie-desc">
-										<h4 style=>Overview</h4>
-										<p>A man with a low IQ has accomplished great things in his life and been present during significant historic events - in each case, far exceeding what anyone imagined he could do. Yet, despite all the things he has attained, his one true love eludes him. 'Forrest Gump' is the story of a man who rose above his challenges, and who proved that determination, courage, and love are more important than ability.</p>
-									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="movie-info">
-										<div class="col-md-6">
-											<p><strong>Year</strong></p>
-											<p><strong>Runtime</strong></p>
-											<p><strong>Critic Rating</strong></p>
-											<p><strong>Audience Rating</strong></p>
-										</div>
-										<div class="col-md-6">
-											<p id="year">(year)</p>
-											<p id="runtime">(runtime)</p>
-											<p id="critic_rating">(critic rating)</p>
-											<p id="audience_rating">(audience rating)</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="movie-info">
+                      <div class="title-block" style="width: 175px;"><h4>MOVIE INFO</h4></div>
+                      <div class="col-md-6">
+                        <p><strong>Year</strong></p>
+                        <p><strong>Runtime</strong></p>
+                        <p><strong>Critic Rating</strong></p>
+                        <p><strong>Audience Rating</strong></p>
+                      </div>
+
+                      <div class="col-md-6">
+                        <p id="year">(year)</p>
+                        <p id="runtime">(runtime)</p>
+                        <p id="critic-rating">(critic rating)</p>
+                        <p id="audience-rating">(run audience rating)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="like" style="text-align: center;">
+                      <div class="title-block" style="width: 220px;"><h4>RATE THIS MOVIE</h4></div>
+                      <i class="fa fa-star-o fa-lg star"></i> 
+                      <i class="fa fa-star-o fa-lg star"></i>
+                      <i class="fa fa-star-o fa-lg star"></i>
+                      <i class="fa fa-star-o fa-lg star"></i>
+                      <i class="fa fa-star-o fa-lg star"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class = "col-md-5">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive modal_image">
+                  </div>
+
+                </div> 
+              </div>
+              
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="recs">
+                      <div class="title-block" style="width: 350px;"><h4>OTHER MOVIES YOU MIGHT LIKE</h4></div>
+                      <div class="row rec_container">
+                                            
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 
 	<script>
@@ -161,7 +202,10 @@
 		var start_timestamp;
     var movie_results;
     var is_initial=true;
+    var clicked_id;
+    var rating_already_set=false;
     var initial_recs = [];
+    var inner_recs;
     {% if initial_recommendations %}
       {% for m in initial_recommendations %}
         initial_recs.push({mid: {{m.mid}} ,
@@ -170,7 +214,7 @@
                             year: "{{m.year}}",
                             critic_rating: {{m.critic_rating}},
                             audience_rating: {{m.audience_rating}},
-                            runtime: {{m.runtime}},
+                            runtime: {% if m.runtime == None %} 120 {% else %} {{m.runtime}} {% endif %},
                             image_url: "{{m.image_url}}"
                      });
       {% endfor %}
@@ -264,7 +308,7 @@
 				}
 				final_transcript = capitalize(final_transcript);
 				final_span.innerHTML = linebreak(final_transcript);
-		document.getElementById('query_input').value = linebreak(final_transcript);
+		    document.getElementById('query_input').value = linebreak(final_transcript);
 				interim_span.innerHTML = linebreak(interim_transcript);
 		// document.getElementById('query_input').value = linebreak(interim_transcript);
 			};
@@ -297,31 +341,101 @@
 
 	$('#modal_result').on('show.bs.modal', function (event) {
     if(is_initial) {
-      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
       var modal = $(this);
       var movie = initial_recs[clicked_id];
-      modal.find('.modal-title').text(movie.name);
+      console.log(movie);
+      modal.find('.modal-title span').text(movie.name);
       modal.find('.modal_image').attr("src",movie.image_url);
       modal.find('div.movie-desc p').text(movie.description);
       modal.find('div.movie-info #year').text(movie.year);
       modal.find('div.movie-info #runtime').text(movie.runtime);
-      modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
-      modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
     }
     else {
-      var clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
       var modal = $(this);
       var movie = movie_results[clicked_id];
-      modal.find('.modal-title').text(movie.name);
+      modal.find('.modal-title span').text(movie.name);
       modal.find('.modal_image').attr("src",movie.image_url);
       modal.find('div.movie-desc p').text(movie.description);
       modal.find('div.movie-info #year').text(movie.year);
       modal.find('div.movie-info #runtime').text(movie.runtime);
-      modal.find('div.movie-info #audience_rating').text(movie.audience_rating);
-      modal.find('div.movie-info #critic_rating').text(movie.critic_rating);
+      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
     }
 	});
+  
+  $($('.star')[0]).hover(function(){
+      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+    });
 
+    $($('.star')[1]).hover(function(){
+      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
+    });
+
+    $($('.star')[2]).hover(function(){
+      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
+    });
+
+    $($('.star')[3]).hover(function(){
+      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[3]).toggleClass('fa-star-o').toggleClass('fa-star');
+    });
+
+    $($('.star')[4]).hover(function(){
+      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[3]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[4]).toggleClass('fa-star-o').toggleClass('fa-star');
+  });
+
+  $('.star').click(function() {
+    var clicked_rating = $(this).index();
+    $('.rec_container').empty();
+    for(var i=0 ; i<clicked_rating; i++) {
+      $($('.star')[i]).toggleClass('fa-star-o').toggleClass('fa-star');
+    }
+    var movie;
+    if(is_initial) {
+      movie = initial_recs[clicked_id];
+    }
+    else {
+      movie = movie_results[clicked_id];
+    }
+    $.ajax({
+      url : "/rate_movie/",
+      type : "POST",
+      data : { m : movie.mid,
+               rating : $(this).index() },
+      success : function(json) { 
+        inner_recs = json;
+        for(var i=0; i<json.length ; i++) {
+          console.log(json[i].fields.name);
+          $('.rec_container').append("<div class=\"col-md-2\">" +
+                                        "<a href=\"#\">" +
+                                          "<div class=\"image\">" +
+                                            "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                          "</div>" +
+                                        "</a>" +
+                                      "</div>");
+          
+          if(i==5) {
+            break;
+          }
+        }
+
+      },
+      error : function(xhr,errmsg,err) { }
+    });
+  });
 
 	</script>
 {% endblock %}

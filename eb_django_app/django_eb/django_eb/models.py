@@ -77,7 +77,7 @@ class RecRating(models.Model):
         unique_together = (('uid', 'mid'),)
 
 class UserRating(models.Model):
-    uid = models.ForeignKey('AuthUser', db_column='id', primary_key=True)
+    uid = models.ForeignKey('AuthUser')
     mid = models.ForeignKey('Movie', db_column='mid')
     rating = models.FloatField()
 

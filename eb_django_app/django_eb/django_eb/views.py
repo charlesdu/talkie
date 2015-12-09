@@ -89,3 +89,24 @@ def dashboard(request):
 
 		context = RequestContext(request, {'initial_recommendations':movies})
 		return render(request, 'dashboard.html', context)
+
+def rate_movie(request):
+	if request.method == 'POST':
+		print request.POST.get('m')
+		print request.POST.get('rating')
+		print request.user.id
+		movie = Movie.objects.get(mid = request.POST.get('m'))
+		user = AuthUser.objects.get(id = request.user.id)
+		ur = UserRating.objects.filter(uid_id=request.user.id, mid=movie)
+		if ur.exists():
+			ur = UserRating.objects.get(uid_id=request.user.id, mid=movie)
+			ur.rating = request.POST.get('rating')
+		else:
+			ur = UserRating(uid_id=request.user.id, mid=movie, rating=request.POST.get('rating'))
+		ur.save()
+		movie_recs = recommendation(movie.mid, request.POST.get('rating'))
+		movies = [];
+		for m in movie_recs:
+			print "movie rec: "+str(m.mid)
+			movies.append(m)
+	return HttpResponse(serializers.serialize('json',movies), content_type = "application/json")
