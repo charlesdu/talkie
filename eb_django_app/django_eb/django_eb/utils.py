@@ -29,6 +29,7 @@ database_fields = {
 	'movie-year': None,
 	'movie-critic_rating': None,
 	'movie-audience_rating': None,
+	'movie-rating_type': None,
 	'movie-runtime': None,
 	'actor-name': None,
 	'director-name': None,
@@ -84,10 +85,12 @@ def match(query, pattern):
 	pattern = pattern.replace("~", "(.*)")
 	pattern = pattern.replace("!", '([^\s]+)')
 	pattern = pattern.replace("@", "(.*?)")
-	pattern = pattern.replace("#", "(show me|show|play|movies|movie|named|name|titled|called|about|featuring|directed by|filmed in|rating|time|;)")
+	pattern = pattern.replace("#", "(show me|play|movies|movie|named|name|titled|called|about|featuring|starring|directed by|filmed in|rating|stars|time|;)")
 	pattern = pattern.replace(" ", "\s*")
-	print pattern
-	return re.match(pattern, query)
+	m = re.match(pattern, query)
+	if m:
+		print pattern
+	return m
 
 
 # Parses a query into specific terms that can be queried in the database
@@ -128,11 +131,28 @@ def parse_query(query):
 		m = match(query, pattern)
 		db_fields['movie-year'] = int(m.group(2))
 
-	# Actor-name
-	pattern = "@ featuring @ # ~"
+	# Movie-rating
+	pattern = "@ rating (of|equal to|greater than|less than) @ # ~"
 	if match(query, pattern):
 		m = match(query, pattern)
-		db_fields['actor-name'] = m.group(2)
+		which = m.group(2)
+		number = m.group(3)
+		if number.isdigit():
+			db_fields['movie-audience_rating'] = int(number) * 20
+		else:
+			db_fields['movie-audience_rating'] = text2num(number)
+		if which == "greater than":
+			db_fields['movie-rating_type'] = ">"
+		elif which == "less than":
+			db_fields['movie-rating_type'] = "<"
+		else:
+			db_fields['movie-rating_type'] = "="
+
+	# Actor-name
+	pattern = "@ (featuring|starring) @ # ~"
+	if match(query, pattern):
+		m = match(query, pattern)
+		db_fields['actor-name'] = m.group(3)
 
 	# Director-name
 	pattern = "@ directed by @ # ~"
@@ -193,6 +213,8 @@ def db_query(terms):
 		conditions.append(clause)
 	if terms['movie-year'] != None:
 		conditions.append("M.year = %s" % str(terms['movie-year']))
+	if terms['movie-audience_rating'] != None:
+		conditions.append("M.audience_rating %s %s" % (terms['movie-rating_type'], str(terms['movie-audience_rating'])))
 	if terms['actor-name'] != None:
 		conditions.append("A.name LIKE \"%s\"" % terms['actor-name'])
 	if terms['director-name'] != None:
