@@ -4,13 +4,18 @@ from django.template import RequestContext, loader
 from django.shortcuts import *
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.db import IntegrityError
 from pprint import pprint
 from django.core import serializers
 
 from models import *
 from utils import *
+
+def logout(request):
+	auth_logout(request)
+	context = RequestContext(request, {})
+	return render(request, 'login.html', context)
 
 def login(request):
 	if request.user.is_authenticated():
