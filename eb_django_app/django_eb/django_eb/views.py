@@ -68,6 +68,8 @@ def dashboard(request):
 	if request.method == 'POST':
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
+		if movies == None:
+			movies = []
 		if movies == "Recommendations":
 			user_ratings = UserRating.objects.filter(uid=request.user.id)
 			mov = [];

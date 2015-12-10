@@ -224,8 +224,13 @@ def db_query(terms):
 	if terms['limit'] != None:
 		query += "LIMIT %s" % str(terms['limit'])
 	print query
-	cursor.execute(query)
-	movies = dictfetchall(cursor)
+	try:
+		cursor.execute(query)
+		movies = dictfetchall(cursor)
+	except:
+		return None
+	if not movies:
+		return None
 	return movies
 	
 

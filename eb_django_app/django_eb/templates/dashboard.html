@@ -288,9 +288,15 @@
 							type : "POST",
 							data : { query : final_transcript },
 							success : function(json) {
+								$('#results_container').empty();
+								$('#initial_recommendations_container').empty();
+								if (json.length == 0) {
+									$('#results_container').html('<center style="font-size: 20px;">Sorry, no results found.</center>');
+								}
 								$('#search-results-heading').text("SEARCH RESULTS");
-				$('#results_container').empty();
-        $('#initial_recommendations_container').empty();
+								hide('loading');
+				
+        
         movie_results = json;
 				for (var i=0; i<json.length; i++) {
 				  if(i==0) { 
@@ -309,7 +315,7 @@
 													  "</a>" +
 													"</div>" +
 												"</div>");
-          hide('loading');
+          
 				  // }
 				 //  else {
 					// $('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
