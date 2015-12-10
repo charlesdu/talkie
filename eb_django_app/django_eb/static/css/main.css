@@ -3,6 +3,14 @@ body {
 	margin-right: auto;
 }
 
+*:focus {
+	outline: none;
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+	outline: none !important;
+}
+
 .start-page {
 	background-color: #F5F5F5;
 	border: 1px solid #E0E0E0;
@@ -35,11 +43,6 @@ body {
 	color: #E53935;
 }
 
-p {
-	text-align: center;
-}
-
 .slogan p {
 	font-size: 17px;
 }
-

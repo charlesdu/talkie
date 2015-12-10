@@ -82,7 +82,7 @@ def match(query, pattern):
 	pattern = pattern.replace("~", "(.*)")
 	pattern = pattern.replace("!", '([^\s]+)')
 	pattern = pattern.replace("@", "(.*?)")
-	pattern = pattern.replace("#", "(show me|play|movies|movie|named|name|titled|called|about|featuring|starring|directed by|filmed in|rating|stars|time|;)")
+	pattern = pattern.replace("#", "(show me|find me|play|movies|movie|named|name|titled|called|about|featuring|starring|directed by|filmed in|rating|stars|time|;)")
 	pattern = pattern.replace(" ", "\s*")
 	m = re.match(pattern, query)
 	if m:

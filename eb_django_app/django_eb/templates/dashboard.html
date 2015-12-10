@@ -3,11 +3,6 @@
 {% load static from staticfiles %}
 
 {% block content %}
-	<div id="results">
-		<span id="final_span"></span>
-		<span id="interim_span"></span>
-	</div>
-
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -38,7 +33,7 @@
 
 		<br>
 
-    <center><button type="button" id="btn-speech" class="btn btn-info btn-circle btn-xl" onclick="setColor('btn-speech', '#00B0F0')"><i class="fa fa-microphone"></i></button></center>
+    <center><button type="button" id="btn-speech" class="btn btn-info btn-circle btn-xl" onclick="startButton(event)"><i class="fa fa-microphone"></i></button></center>
 
 		<br>
 
@@ -56,7 +51,7 @@
       <div class="col-md-12">
         <center>
           <h3 style="background-color: #00B0F0; padding-top: 10px; padding-bottom: 10px; color: white; border-radius: 3px; font-family: 'Oswald', san-serif; font-size: 30px;">Search Results</h3>
-          <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+          <!-- <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> -->
         </center>
       </div>
     </div>
@@ -301,10 +296,12 @@
 					}
 				}
 				final_transcript = capitalize(final_transcript);
-				final_span.innerHTML = linebreak(final_transcript);
-		    document.getElementById('query_input').value = linebreak(final_transcript);
-				interim_span.innerHTML = linebreak(interim_transcript);
-		// document.getElementById('query_input').value = linebreak(interim_transcript);
+				if (final_transcript === "") {
+					document.getElementById('query_input').value = linebreak(interim_transcript);
+				} else {
+					$('#btn-speech').blur();
+					document.getElementById('query_input').value = linebreak(final_transcript);
+				}
 			};
 		}
 
@@ -326,10 +323,9 @@
 			final_transcript = '';
 			recognition.lang = "en-US";
 			recognition.start();
-      is_initial = false;
+			is_initial = false;
 			ignore_onend = false;
-			final_span.innerHTML = '';
-			interim_span.innerHTML = '';
+			document.getElementById('query_input').value = "";
 			start_timestamp = event.timeStamp;
 		}
 
