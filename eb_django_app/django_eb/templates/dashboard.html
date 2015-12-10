@@ -38,27 +38,28 @@
 
 		<br>
 
-    <center><button type="button" id="start_button" onclick="startButton(event)" class="btn btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+    <center><button type="button" id="btn-speech" class="btn btn-info btn-circle btn-xl" onclick="setColor('btn-speech', '#00B0F0')"><i class="fa fa-microphone"></i></button></center>
 
 		<br>
 
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2">
-				<div class="input-group">
-					<input id="query_input" type="text" class="form-control" placeholder="Click the microphone above to say a query. Try something like 'Show me movies featuring Tom Hanks' ">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
-					</span>
-				</div>
-			</div>
-		</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group form-group-lg">
+          <input id="query_input" type="text" class="form-control" placeholder="Say something like &quot;Find me movies featuring Tom Hanks&quot;." style="text-align: center; font-size: 24px;">
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-10 -->
+    </div><!-- /.row -->
 
 		<br><br>
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2" style="border-bottom: 2px solid #00B0F0;">
-				<center><h3>Search Results</h3></center>
-			</div>
-		</div>
+		
+    <div class="row">
+      <div class="col-md-12">
+        <center>
+          <h3 style="background-color: #00B0F0; padding-top: 10px; padding-bottom: 10px; color: white; border-radius: 3px; font-family: 'Oswald', san-serif; font-size: 30px;">Search Results</h3>
+          <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+        </center>
+      </div>
+    </div>
 
 		<br><br>
 
@@ -73,26 +74,22 @@
           {% endif %}
 
           {% if forloop.counter0|divisibleby:4 %}
-            <div id={{ forloop.counter0 }}  class ="col-md-2 col-lg-offset-2">
-              <div class="panel panel-default">
-                <div class="panel-heading"> {{ m.name }} </div>
-                <div class="panel-body">
-                  <a data-toggle="modal" data-target=".bs-example-modal-lg">
-                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
-                  </a>
-                </div>
+            <div id={{ forloop.counter0 }}  class ="col-md-3">
+              <div class="image results">
+                <a data-toggle="modal" data-target=".bs-example-modal-lg">
+                  <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  <p>{{ m.name }}</p>
+                </a>
               </div>
             </div>
           {% else %}
-            <div id={{ forloop.counter0 }}  class ="col-md-2">
-              <div class="panel panel-default">
-                <div class="panel-heading"> {{ m.name }} </div>
-                <div class="panel-body">
+            <div id={{ forloop.counter0 }}  class ="col-md-3">
+                <div class="image results">
                   <a data-toggle="modal" data-target=".bs-example-modal-lg">
                     <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                    <p>{{ m.name }}</p>
                   </a>
                 </div>
-              </div>
             </div>
           {% endif %}
 
@@ -270,30 +267,28 @@
 					$('#results_container').append("</div> <div class=\"row\">");
 				  }
 
-								  if(i%4 == 0) {
-					$('#results_container').append("<div id=" + i + " class = \"col-md-2 col-lg-offset-2\">" +
-												  "<div class=\"panel panel-default\">" +
-													"<div class=\"panel-heading\">"+ json[i].name + "</div>" +
-													"<div class=\"panel-body\">" +
+								  // if(i%4 == 0) {
+					$('#results_container').append("<div id=" + i + " class = \"col-md-3\">" +
+													"<div class=\"image results\">" +
 													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
 														"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
+                            "<p>"+ json[i].name + "</p>" +
 													  "</a>" +
 													"</div>" +
-												  "</div>" +
 												"</div>");
-				  }
-				  else {
-					$('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
-												  "<div class=\"panel panel-default\">" +
-													"<div class=\"panel-heading\">"+ json[i].name + "</div>" +
-													"<div class=\"panel-body\">" +
-													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-														"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
-													  "</a>" +
-													"</div>" +
-												  "</div>" +
-												"</div>");
-				  }
+				  // }
+				 //  else {
+					// $('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
+					// 							  "<div class=\"panel panel-default\">" +
+					// 								"<div class=\"panel-heading\">"+ json[i].name + "</div>" +
+					// 								"<div class=\"panel-body\">" +
+					// 								  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
+					// 									"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
+					// 								  "</a>" +
+					// 								"</div>" +
+					// 							  "</div>" +
+					// 							"</div>");
+				 //  }
 				 
 				}
 							},
@@ -340,7 +335,7 @@
 
 	$('#modal_result').on('show.bs.modal', function (event) {
     if(is_initial) {
-      clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
       var modal = $(this);
       var movie = initial_recs[clicked_id];
       console.log(movie);
@@ -424,7 +419,7 @@
       }
     }
     else {
-      clicked_id = $(event.relatedTarget).parent().parent().parent().attr("id");
+      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
       var modal = $(this);
       var movie = movie_results[clicked_id];
       modal.find('.modal-title span').text(movie.name);
