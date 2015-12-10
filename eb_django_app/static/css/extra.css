@@ -1,0 +1,232 @@
+.search-box {
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	box-shadow: none;
+	border-bottom: 2px solid #00B0F0;
+}
+
+.search-box:active, .search-box:focus, .search-box:active {
+	background-image: none;
+	outline: 0;
+	-webkit-box-shadow: none;
+}
+
+.form-group-lg .form-control {
+	border-radius: 0px;
+	margin-top: 30px;
+}
+
+#bs-example-navbar-collapse-1 a:hover {
+	color: #00B0F0;
+}
+
+.recs {
+  cursor: default;
+}
+
+.btn-circle {
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	padding: 6px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 15px;
+	background-color: #00B0F0;
+	border-color: #00B0F0;
+}
+
+#button-speech {
+  font-size: 50px;
+}
+
+.btn-circle.btn-lg {
+	width: 50px;
+	height: 50px;
+	padding: 10px 16px;
+	font-size: 18px;
+	line-height: 1.33;
+	border-radius: 25px;
+}
+.btn-circle.btn-xl {
+	width: 70px;
+	height: 70px;
+	padding: 10px 16px;
+	font-size: 24px;
+	line-height: 1.33;
+	border-radius: 35px;
+}
+
+.panel-heading {
+	text-align: center;
+}
+
+.movie-image {
+	background-size: cover;
+	background-position: center;
+	height: 388px;
+	width: 255px;
+}
+
+.movie-image.thumbnail {
+	width: 117px;
+	height: 176px;
+}
+
+.movie-desc {
+	padding: 10px 15px;
+}
+
+.title-block {
+	text-align: center;
+	position: relative; 
+	left: -15px; 
+	top: -8px;
+	background-color: #00B0F0;
+	color: white;
+	font-family: 'Oswald', sans-serif;
+	font-weight: 400;
+}
+
+.title-block h4 {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.fa-star {
+	color: #ff9999;
+}
+
+.fa-star-o {
+	color: #ff9999;
+}
+
+.movie-desc p {
+	font-size: 12px;
+}
+
+.movie-info {
+	font-size: 12px;
+}
+
+.col-md-4 p {
+	margin: 0px;
+	font-size: 12px;
+}
+
+hr {
+	height: 2px;
+	background-color: #00B0F0;
+}
+
+.recs img {
+	height: 150px;
+}
+
+.image img {
+	width: 100%;
+	vertical-align: top;
+}
+
+.star {
+	padding-right: 10px;
+	padding-left: 0px;
+	margin-left: -4px;
+	cursor: pointer;
+}
+
+.img-thumbnail {
+	padding: 0px !important;
+	border: 0px !important;
+}
+
+.image p {
+	font-family: 'Oswald', sans-serif;
+	text-align: center;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.modal-body {
+	background-color: #EEEEEE;
+}
+
+.modal-header h2 {
+	font: 33px sans-serif;
+	position: relative;
+	text-align: center;
+	text-transform: uppercase;
+	z-index: 1;
+	width: 95%;
+}
+
+.modal-header h2:before {
+	border-top: 2px solid #dfdfdf;
+	content:"";
+	margin: 0 auto; /* this centers the line to the full width specified */
+	position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+	top: 50%; left: 0; right: 0; bottom: 0;
+	width: 95%;
+	z-index: -1;
+}
+
+.modal-header h2 span { 
+	/* to hide the lines from behind the text, you have to set the background color the same as the container */ 
+	background: #fff; 
+	padding: 0 15px; 
+}
+
+.searches a {
+	color: black;
+}
+
+.list-group-item:hover {
+	background-color: #EEEEEE;
+	text-decoration: none;
+}
+
+.glyphicon-refresh-animate {
+	-animation: spin .7s infinite linear;
+	-webkit-animation: spin2 1s infinite linear;
+	font-size: 100px;
+	margin-top: 20px;
+	color: #6666ff;
+}
+
+@-webkit-keyframes spin2 {
+	from { -webkit-transform: rotate(0deg);}
+	to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+	from { transform: scale(1) rotate(0deg);}
+	to { transform: scale(1) rotate(360deg);}
+}
+
+.results {
+	cursor: pointer;
+}
+
+@-webkit-keyframes pulse_animation {
+  0% { -webkit-transform: scale(1); }
+  30% { -webkit-transform: scale(1); }
+  40% { -webkit-transform: scale(1.08); }
+  50% { -webkit-transform: scale(1); }
+  60% { -webkit-transform: scale(1); }
+  70% { -webkit-transform: scale(1.05); }
+  80% { -webkit-transform: scale(1); }
+  100% { -webkit-transform: scale(1); }
+}
+
+.pulse {
+  -webkit-animation-name: 'pulse_animation';
+  -webkit-animation-duration: 5000ms;
+  -webkit-transform-origin:70% 70%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
