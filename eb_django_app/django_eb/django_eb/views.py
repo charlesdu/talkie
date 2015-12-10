@@ -1,6 +1,4 @@
 import json
-import nltk
-import nltk.data
 
 from django.http import HttpResponse
 from django.template import RequestContext, loader
