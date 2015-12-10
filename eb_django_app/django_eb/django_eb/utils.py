@@ -196,8 +196,7 @@ def db_query(terms):
 					INNER JOIN Movie_Actor MA ON M.mid = MA.mid
 					INNER JOIN Actor A ON MA.aid = A.aid
 					INNER JOIN Movie_Director MD ON M.mid = MD.mid
-					INNER JOIN Director D ON MD.did = D.did
-					WHERE """
+					INNER JOIN Director D ON MD.did = D.did """
 	conditions = []
 	if terms['movie-name'] != None:
 		conditions.append("M.name LIKE \"%s\"" % terms['movie-name'])
@@ -217,9 +216,11 @@ def db_query(terms):
 	if terms['director-name'] != None:
 		conditions.append("D.name LIKE \"%s\"" % terms['director-name'])
 	# Build the WHERE conditions
-	for condition in conditions:
-		query += condition + " AND "
-	query = query[:-4]
+	if len(conditions) != 0:
+		query += "WHERE "
+		for condition in conditions:
+			query += condition + " AND "
+		query = query[:-4]
 	# Add the LIMIT
 	if terms['limit'] != None:
 		query += "LIMIT %s" % str(terms['limit'])
