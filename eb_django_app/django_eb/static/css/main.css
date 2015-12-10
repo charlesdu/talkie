@@ -11,6 +11,37 @@ body {
 	outline: none !important;
 }
 
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -5;
+}
+
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+#bg-black {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -4;
+  background-color: #000000;
+  opacity: 0.4;
+}
+
 .start-page {
 	background-color: #F5F5F5;
 	border: 1px solid #E0E0E0;
