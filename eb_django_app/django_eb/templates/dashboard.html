@@ -388,7 +388,7 @@
           }
 
           for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
-            $($('.star')[j]).addClass('fa-star-0');
+            $($('.star')[j]).addClass('fa-star-o');
             $($('.star')[j]).removeClass('fa-star');
           }
 
@@ -466,7 +466,7 @@
             $($('.star')[j]).removeClass('fa-star-o');
           }
           for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
-            $($('.star')[j]).addClass('fa-star-0');
+            $($('.star')[j]).addClass('fa-star-o');
             $($('.star')[j]).removeClass('fa-star');
           }
 
@@ -534,41 +534,99 @@
 
   
   $($('.star')[0]).hover(function(){
-      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
+      for(var i=0 ; i<5 ; i++){
+        $($('.star')[i]).removeClass('fa-star');
+        $($('.star')[i]).removeClass('fa-star-o');
+      }
+
+      $($('.star')[0]).addClass('fa-star');
+      $($('.star')[1]).addClass('fa-star-o');
+      $($('.star')[2]).addClass('fa-star-o');
+      $($('.star')[3]).addClass('fa-star-o');
+      $($('.star')[4]).addClass('fa-star-o');
+    },
+    function() {
+      $('.star').addClass('fa-star-o');
     });
 
     $($('.star')[1]).hover(function(){
-      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
+      for(var i=0 ; i<5 ; i++){
+        $($('.star')[i]).removeClass('fa-star');
+        $($('.star')[i]).removeClass('fa-star-o');
+      }
+
+      $($('.star')[0]).addClass('fa-star');
+      $($('.star')[1]).addClass('fa-star');
+      $($('.star')[2]).addClass('fa-star-o');
+      $($('.star')[3]).addClass('fa-star-o');
+      $($('.star')[4]).addClass('fa-star-o');
+    },
+    function() {
+      $('.star').addClass('fa-star-o');
     });
 
     $($('.star')[2]).hover(function(){
-      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
+      for(var i=0 ; i<5 ; i++){
+        $($('.star')[i]).removeClass('fa-star');
+        $($('.star')[i]).removeClass('fa-star-o');
+      }
+
+      $($('.star')[0]).addClass('fa-star');
+      $($('.star')[1]).addClass('fa-star');
+      $($('.star')[2]).addClass('fa-star');
+      $($('.star')[3]).addClass('fa-star-o');
+      $($('.star')[4]).addClass('fa-star-o');
+    },
+    function() {
+      $('.star').addClass('fa-star-o');
     });
 
     $($('.star')[3]).hover(function(){
-      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[3]).toggleClass('fa-star-o').toggleClass('fa-star');
+      for(var i=0 ; i<5 ; i++){
+        $($('.star')[i]).removeClass('fa-star');
+        $($('.star')[i]).removeClass('fa-star-o');
+      }
+
+      $($('.star')[0]).addClass('fa-star');
+      $($('.star')[1]).addClass('fa-star');
+      $($('.star')[2]).addClass('fa-star');
+      $($('.star')[3]).addClass('fa-star');
+      $($('.star')[4]).addClass('fa-star-o');
+    },
+    function() {
+      $('.star').addClass('fa-star-o');
     });
 
     $($('.star')[4]).hover(function(){
-      $($('.star')[0]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[1]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[2]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[3]).toggleClass('fa-star-o').toggleClass('fa-star');
-      $($('.star')[4]).toggleClass('fa-star-o').toggleClass('fa-star');
-  });
+      for(var i=0 ; i<5 ; i++){
+        $($('.star')[i]).removeClass('fa-star');
+        $($('.star')[i]).removeClass('fa-star-o');
+      }
+
+      $($('.star')[0]).addClass('fa-star');
+      $($('.star')[1]).addClass('fa-star');
+      $($('.star')[2]).addClass('fa-star');
+      $($('.star')[3]).addClass('fa-star');
+      $($('.star')[4]).addClass('fa-star');
+    },
+    function() {
+      $('.star').addClass('fa-star-o');
+    });
 
   $('.star').click(function() {
     var clicked_rating = $(this).index();
     $('.rec_container').empty();
+    
+    $('.star').unbind('mouseenter mouseleave');
+    $('.star').removeClass('fa-star');
+    $('.star').removeClass('fa-star-o');
     for(var i=0 ; i<clicked_rating; i++) {
-      $($('.star')[i]).toggleClass('fa-star-o').toggleClass('fa-star');
+      $($('.star')[i]).addClass('fa-star');
     }
+    for(var i=clicked_rating ; i<5 ; i++) {
+      $($('.star')[i]).addClass('fa-star-o');
+    }
+
     var movie;
     if(is_initial) {
       movie = initial_recs[clicked_id];
