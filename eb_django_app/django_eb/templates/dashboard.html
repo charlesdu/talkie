@@ -362,178 +362,7 @@
 		}
 
 	$('#modal_result').on('show.bs.modal', function (event) {
-    if(is_initial) {
-      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
-      var modal = $(this);
-      var movie = initial_recs[clicked_id];
-      console.log(movie);
-      modal.find('.modal-title span').text(movie.name);
-      modal.find('.modal_image').attr("src",movie.image_url);
-      modal.find('div.movie-desc p').text(movie.description);
-      modal.find('div.movie-info #year').text(movie.year);
-      modal.find('div.movie-info #runtime').text(movie.runtime);
-      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
-      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
-
-      
-      for(var i=0 ; i<ratings_by_this_user.length ; i++) {
-        
-        console.log("comparing: "+ ratings_by_this_user[i].mid +" with this: " + movie.mid);
-        if(ratings_by_this_user[i].mid == movie.mid) {
-
-          console.log("found match, rating is: " + parseInt(ratings_by_this_user[i].rating));
-          for(var j=0 ; j<parseInt(ratings_by_this_user[i].rating); j++) {
-            $($('.star')[j]).addClass('fa-star');
-            $($('.star')[j]).removeClass('fa-star-o');
-          }
-
-          for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
-            $($('.star')[j]).addClass('fa-star-o');
-            $($('.star')[j]).removeClass('fa-star');
-          }
-
-          var curr_rating = parseInt(ratings_by_this_user[i].rating);
-          $.ajax({
-            url : "/rate_movie/",
-            type : "POST",
-            data : { m : movie.mid,
-                     rating : parseInt(ratings_by_this_user[i].rating) },
-            success : function(json) { 
-              inner_recs = json;
-
-              ratings_by_this_user.push({uid: current_user_id,
-                                  mid: movie.mid,
-                                  rating: curr_rating});
-
-              $('.rec-container').append("<hr>" +
-                                            "<div class=\"row\">" +
-                                              "<div class=\"col-md-12\">" +
-                                                "<div class=\"panel panel-default\">" +
-                                                  "<div class=\"panel-body\">" +
-                                                    "<div class=\"recs\">" +
-                                                      "<div class=\"title-block\" style=\"width: 350px;\">" +
-                                                        "<h4>OTHER MOVIES YOU MIGHT LIKE</h4>" +
-                                                      "</div>" +
-                                                      "<div class=\"row rec-inner-container\">");
-
-              for(var i=0; i<json.length ; i++) {
-                console.log(json[i].fields.name);
-                
-                $('.rec-inner-container').append("<div class=\"col-md-2\">" +
-                                              "<a href=\"#\">" +
-                                                "<div class=\"image\">" +
-                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
-                                                "</div>" +
-                                              "</a>" +
-                                            "</div>");
-                
-                if(i==5) {
-                  break;
-                }
-              }
-
-              $('.rec-container').append(             "</div>"+ 
-                                                    "</div>" + 
-                                                  "</div>" +
-                                                "</div>" +
-                                              "</div>" +
-                                            "</div>");
-
-            },
-            error : function(xhr,errmsg,err) { }
-          });
-
-        }
-      }
-    }
-    else {
-      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
-      var modal = $(this);
-      var movie = movie_results[clicked_id];
-      modal.find('.modal-title span').text(movie.name);
-      modal.find('.modal_image').attr("src",movie.image_url);
-      modal.find('div.movie-desc p').text(movie.description);
-      modal.find('div.movie-info #year').text(movie.year);
-      modal.find('div.movie-info #runtime').text(movie.runtime);
-      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
-      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
-
-      for(var i=0 ; i<ratings_by_this_user.length ; i++) {
-        if(ratings_by_this_user[i].mid == movie.mid) {
-
-          for(var j=0 ; j<parseInt(ratings_by_this_user[i].rating); j++) {
-            $($('.star')[j]).addClass('fa-star');
-            $($('.star')[j]).removeClass('fa-star-o');
-          }
-          for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
-            $($('.star')[j]).addClass('fa-star-o');
-            $($('.star')[j]).removeClass('fa-star');
-          }
-
-          var curr_rating = parseInt(ratings_by_this_user[i].rating);
-          $.ajax({
-            url : "/rate_movie/",
-            type : "POST",
-            data : { m : movie.mid,
-                     rating : parseInt(ratings_by_this_user[i].rating) },
-            success : function(json) { 
-              inner_recs = json;
-
-              ratings_by_this_user.push({uid: current_user_id,
-                                  mid: movie.mid,
-                                  rating: curr_rating});
-
-              $('.rec-container').append("<hr>" +
-                                            "<div class=\"row\">" +
-                                              "<div class=\"col-md-12\">" +
-                                                "<div class=\"panel panel-default\">" +
-                                                  "<div class=\"panel-body\">" +
-                                                    "<div class=\"recs\">" +
-                                                      "<div class=\"title-block\" style=\"width: 350px;\">" +
-                                                        "<h4>OTHER MOVIES YOU MIGHT LIKE</h4>" +
-                                                      "</div>" +
-                                                      "<div class=\"row rec-inner-container\">");
-
-              for(var i=0; i<json.length ; i++) {
-                console.log(json[i].fields.name);
-                
-                $('.rec-inner-container').append("<div class=\"col-md-2\">" +
-                                              "<a href=\"#\">" +
-                                                "<div class=\"image\">" +
-                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
-                                                "</div>" +
-                                              "</a>" +
-                                            "</div>");
-                
-                if(i==5) {
-                  break;
-                }
-              }
-
-              $('.rec-container').append(             "</div>"+ 
-                                                    "</div>" + 
-                                                  "</div>" +
-                                                "</div>" +
-                                              "</div>" +
-                                            "</div>");
-
-            },
-            error : function(xhr,errmsg,err) { }
-          });
-
-        }
-      }
-    }
-	});
-
-  $('#modal_result').on('hidden.bs.modal', function () {
-    $('.star').addClass('fa-star-o');
-    $('.star').removeClass('fa-star');
-    $('.rec-container').empty();
-  })
-
-  
-  $($('.star')[0]).hover(function(){
+    $($('.star')[0]).hover(function(){
       for(var i=0 ; i<5 ; i++){
         $($('.star')[i]).removeClass('fa-star');
         $($('.star')[i]).removeClass('fa-star-o');
@@ -613,6 +442,180 @@
       $('.star').addClass('fa-star-o');
     });
 
+
+    if(is_initial) {
+      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
+      var modal = $(this);
+      var movie = initial_recs[clicked_id];
+      console.log(movie);
+      modal.find('.modal-title span').text(movie.name);
+      modal.find('.modal_image').attr("src",movie.image_url);
+      modal.find('div.movie-desc p').text(movie.description);
+      modal.find('div.movie-info #year').text(movie.year);
+      modal.find('div.movie-info #runtime').text(movie.runtime);
+      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
+
+      
+      for(var i=0 ; i<ratings_by_this_user.length ; i++) {
+        
+        console.log("comparing: "+ ratings_by_this_user[i].mid +" with this: " + movie.mid);
+        if(ratings_by_this_user[i].mid == movie.mid) {
+
+          console.log("found match, rating is: " + parseInt(ratings_by_this_user[i].rating));
+          for(var j=0 ; j<parseInt(ratings_by_this_user[i].rating); j++) {
+            $($('.star')[j]).addClass('fa-star');
+            $($('.star')[j]).removeClass('fa-star-o');
+          }
+
+          for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
+            $($('.star')[j]).addClass('fa-star-o');
+            $($('.star')[j]).removeClass('fa-star');
+          }
+
+          var curr_rating = parseInt(ratings_by_this_user[i].rating);
+          $.ajax({
+            url : "/rate_movie/",
+            type : "POST",
+            data : { m : movie.mid,
+                     rating : parseInt(ratings_by_this_user[i].rating) },
+            success : function(json) { 
+              inner_recs = json;
+
+              ratings_by_this_user.push({uid: current_user_id,
+                                  mid: movie.mid,
+                                  rating: curr_rating});
+
+              $('.rec-container').append("<hr>" +
+                                            "<div class=\"row\">" +
+                                              "<div class=\"col-md-12\">" +
+                                                "<div class=\"panel panel-default\">" +
+                                                  "<div class=\"panel-body\">" +
+                                                    "<div class=\"recs\">" +
+                                                      "<div class=\"title-block\" style=\"width: 350px;\">" +
+                                                        "<h4>OTHER MOVIES YOU MIGHT LIKE</h4>" +
+                                                      "</div>" +
+                                                      "<div class=\"row rec-inner-container\">");
+
+              for(var i=0; i<json.length ; i++) {
+                console.log(json[i].fields.name);
+                
+                $('.rec-inner-container').append("<div class=\"col-md-2\">" +
+                                              "<a href=\"#\">" +
+                                                "<div class=\"image recs\">" +
+                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                                  "<p>"+json[i].fields.name+"</p>"+
+                                                "</div>" +
+                                              "</a>" +
+                                            "</div>");
+                
+                if(i==5) {
+                  break;
+                }
+              }
+
+              $('.rec-container').append(             "</div>"+ 
+                                                    "</div>" + 
+                                                  "</div>" +
+                                                "</div>" +
+                                              "</div>" +
+                                            "</div>");
+
+            },
+            error : function(xhr,errmsg,err) { }
+          });
+
+        }
+      }
+    }
+    else {
+      clicked_id = $(event.relatedTarget).parent().parent().attr("id");
+      var modal = $(this);
+      var movie = movie_results[clicked_id];
+      modal.find('.modal-title span').text(movie.name);
+      modal.find('.modal_image').attr("src",movie.image_url);
+      modal.find('div.movie-desc p').text(movie.description);
+      modal.find('div.movie-info #year').text(movie.year);
+      modal.find('div.movie-info #runtime').text(movie.runtime);
+      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
+      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
+
+      for(var i=0 ; i<ratings_by_this_user.length ; i++) {
+        if(ratings_by_this_user[i].mid == movie.mid) {
+
+          for(var j=0 ; j<parseInt(ratings_by_this_user[i].rating); j++) {
+            $($('.star')[j]).addClass('fa-star');
+            $($('.star')[j]).removeClass('fa-star-o');
+          }
+          for(var j=parseInt(ratings_by_this_user[i].rating) ; j<5; j++) {
+            $($('.star')[j]).addClass('fa-star-o');
+            $($('.star')[j]).removeClass('fa-star');
+          }
+
+          var curr_rating = parseInt(ratings_by_this_user[i].rating);
+          $.ajax({
+            url : "/rate_movie/",
+            type : "POST",
+            data : { m : movie.mid,
+                     rating : parseInt(ratings_by_this_user[i].rating) },
+            success : function(json) { 
+              inner_recs = json;
+
+              ratings_by_this_user.push({uid: current_user_id,
+                                  mid: movie.mid,
+                                  rating: curr_rating});
+
+              $('.rec-container').append("<hr>" +
+                                            "<div class=\"row\">" +
+                                              "<div class=\"col-md-12\">" +
+                                                "<div class=\"panel panel-default\">" +
+                                                  "<div class=\"panel-body\">" +
+                                                    "<div class=\"recs\">" +
+                                                      "<div class=\"title-block\" style=\"width: 350px;\">" +
+                                                        "<h4>OTHER MOVIES YOU MIGHT LIKE</h4>" +
+                                                      "</div>" +
+                                                      "<div class=\"row rec-inner-container\">");
+
+              for(var i=0; i<json.length ; i++) {
+                console.log(json[i].fields.name);
+                
+                $('.rec-inner-container').append("<div class=\"col-md-2\">" +
+                                              "<a href=\"#\">" +
+                                                "<div class=\"image recs\">" +
+                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                                  "<p>"+json[i].fields.name+"</p>"+
+                                                "</div>" +
+                                              "</a>" +
+                                            "</div>");
+                
+                if(i==5) {
+                  break;
+                }
+              }
+
+              $('.rec-container').append(             "</div>"+ 
+                                                    "</div>" + 
+                                                  "</div>" +
+                                                "</div>" +
+                                              "</div>" +
+                                            "</div>");
+
+            },
+            error : function(xhr,errmsg,err) { }
+          });
+
+        }
+      }
+    }
+	});
+
+  $('#modal_result').on('hidden.bs.modal', function () {
+    $('.star').addClass('fa-star-o');
+    $('.star').removeClass('fa-star');
+    $('.rec-container').empty();
+  })
+
+
   $('.star').click(function() {
     var clicked_rating = $(this).index();
     $('.rec_container').empty();
@@ -662,8 +665,9 @@
           
           $('.rec-inner-container').append("<div class=\"col-md-2\">" +
                                         "<a href=\"#\">" +
-                                          "<div class=\"image\">" +
+                                          "<div class=\"image recs\">" +
                                             "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                            "<p>"+json[i].fields.name+"</p>"+
                                           "</div>" +
                                         "</a>" +
                                       "</div>");
