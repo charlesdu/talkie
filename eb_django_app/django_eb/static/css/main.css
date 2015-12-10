@@ -7,8 +7,28 @@ body {
 	outline: none;
 }
 
+@-webkit-keyframes pulse_animation {
+	0% { -webkit-transform: scale(1); }
+	10% { -webkit-transform: scale(1.2); }
+	20% { -webkit-transform: scale(1.1); }
+	30% { -webkit-transform: scale(1); }
+	40% { -webkit-transform: scale(1.15); }
+	50% { -webkit-transform: scale(1); }
+	60% { -webkit-transform: scale(1.05); }
+	70% { -webkit-transform: scale(1.15); }
+	80% { -webkit-transform: scale(1); }
+	100% { -webkit-transform: scale(1); }
+}
+
 .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
 	outline: none !important;
+	background-color: #6666FF;
+	border-color: #6666FF;
+	-webkit-animation-name: 'pulse_animation';
+	-webkit-animation-duration: 5000ms;
+	-webkit-transform-origin:70% 70%;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
 }
 
 #bg {

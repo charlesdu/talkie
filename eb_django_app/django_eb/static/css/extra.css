@@ -58,6 +58,18 @@
 	text-align: center;
 }
 
+.movie-image {
+	background-size: cover;
+	background-position: center;
+	height: 388px;
+	width: 255px;
+}
+
+.movie-image.thumbnail {
+	width: 117px;
+	height: 176px;
+}
+
 .movie-desc {
 	padding: 10px 15px;
 }

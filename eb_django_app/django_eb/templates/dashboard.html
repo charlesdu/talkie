@@ -19,7 +19,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">User Profile</a></li>
+					<!-- <li><a href="#">User Profile</a></li> -->
 					<li><a href="/logout">Logout</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
@@ -303,7 +303,7 @@
 					$('#results_container').append("<div id=" + i + " class = \"col-md-3\">" +
 													"<div class=\"image results\">" +
 													  "<a data-toggle=\"modal\" data-target=\".bs-example-modal-lg\">" +
-														"<img src=\""+ json[i].image_url +"\" class=\"img-thumbnail img-responsive\">" +
+														'<div style="background-image:url(\'' + json[i].image_url + '\');" class="movie-image"></div>'+ 
                             "<p>"+ json[i].name + "</p>" +
 													  "</a>" +
 													"</div>" +
@@ -427,7 +427,7 @@
                 $('.rec-inner-container').append("<div class=\"col-md-2\">" +
                                               "<a href=\"#\">" +
                                                 "<div class=\"image\">" +
-                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                                  '<div style="background-image:url(\'' + json[i].fields.image_url + '\');" class="movie-image thumbnail"></div>'+ 
                                                 "</div>" +
                                               "</a>" +
                                             "</div>");
@@ -505,7 +505,7 @@
                 $('.rec-inner-container').append("<div class=\"col-md-2\">" +
                                               "<a href=\"#\">" +
                                                 "<div class=\"image\">" +
-                                                  "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                                  '<div style="background-image:url(\'' + json[i].fields.image_url + '\');" class="movie-image thumbnail"></div>'+ 
                                                 "</div>" +
                                               "</a>" +
                                             "</div>");
@@ -669,7 +669,7 @@
           $('.rec-inner-container').append("<div class=\"col-md-2\">" +
                                         "<a href=\"#\">" +
                                           "<div class=\"image\">" +
-                                            "<img src="+json[i].fields.image_url+" class=\"img-thumbnail img-responsive\">" +
+                                            '<div style="background-image:url(\'' + json[i].fields.image_url + '\');" class="movie-image thumbnail"></div>'+ 
                                           "</div>" +
                                         "</a>" +
                                       "</div>");
