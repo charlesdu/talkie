@@ -40,7 +40,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="form-group form-group-lg">
-          <input id="query_input" type="text" class="form-control search-box" placeholder="Say something like &quot;Find me movies featuring Tom Hanks&quot;." style="text-align: center; font-size: 24px;">
+          <input id="query_input" type="text" class="form-control search-box" placeholder="Say something like &quot;Find me movies featuring Tom Hanks&quot;" style="text-align: center; font-size: 24px;">
         </div><!-- /input-group -->
       </div><!-- /.col-lg-10 -->
     </div><!-- /.row -->
@@ -337,6 +337,7 @@
 					document.getElementById('query_input').value = linebreak(interim_transcript);
 				} else {
 					$('#btn-speech').blur();
+					recognition.stop();
 					document.getElementById('query_input').value = linebreak(final_transcript);
 				}
 			};

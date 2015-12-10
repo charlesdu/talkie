@@ -24,6 +24,9 @@ body {
 	outline: none !important;
 	background-color: #6666FF;
 	border-color: #6666FF;
+}
+
+.pulse.focus, .pulse:focus {
 	-webkit-animation-name: 'pulse_animation';
 	-webkit-animation-duration: 5000ms;
 	-webkit-transform-origin:70% 70%;

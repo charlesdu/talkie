@@ -40,15 +40,20 @@ def login(request):
 
 def sign_up(request):
 	if request.method == 'POST':
-		if request.POST['pwd'] == request.POST['pwd_confirm']:
+		username = request.POST['username']
+		email = request.POST['email']
+		password = request.POST['pwd']
+		confirm_password = request.POST['pwd_confirm']
+		if password == confirm_password:
 			try:
-				user = User.objects.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['pwd'])
+				user = User.objects.create_user(username=username, email=email, password=password)
 			except IntegrityError:
 				context = RequestContext(request, {'error': "This username already exists. Please try a different one."})
 				return render(request, 'sign_up.html', context)
 			else:
 				user.save()
-				context = RequestContext(request, {})
+				new_user = authenticate(username=username, password=password)
+				auth_login(request, new_user)
 				return redirect('/dashboard')
 		else:
 			context = RequestContext(request, {'error': "The passwords do not match. Please try again."})
