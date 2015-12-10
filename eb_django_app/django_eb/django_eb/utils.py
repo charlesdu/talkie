@@ -3,7 +3,6 @@ import json, re
 from models import *
 from django.db import connection
 from text2num import *
-from wordnoise import *
 from pprint import pprint
 
 # A list of split terms that a user can ask

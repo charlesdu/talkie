@@ -49,7 +49,7 @@ def sign_up(request):
 			else:
 				user.save()
 				context = RequestContext(request, {})
-				return redirect('/dashboard ')
+				return redirect('/dashboard')
 		else:
 			context = RequestContext(request, {'error': "The passwords do not match. Please try again."})
 			return render(request, 'sign_up.html', context)        
