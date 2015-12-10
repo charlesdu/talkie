@@ -2,7 +2,6 @@ import json, re
 
 from models import *
 from django.db import connection
-from nltk.corpus import stopwords
 from text2num import *
 from wordnoise import *
 from pprint import pprint
