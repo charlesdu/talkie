@@ -63,10 +63,10 @@ body {
 }
 
 .start-page {
-	background-color: #F5F5F5;
+	background-color: rgba(245, 245, 245, 0.8);
 	border: 1px solid #E0E0E0;
 	border-radius: 5px;
-	margin: 50px auto;
+	margin: 120px auto;
 	padding: 10px;
 	width: 500px;
 }
