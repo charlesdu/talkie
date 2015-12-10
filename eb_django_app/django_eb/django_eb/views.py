@@ -69,7 +69,6 @@ def dashboard(request):
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
 		if movies == "Recommendations":
-			# RECOMMENDATION GENERATOR
 			user_ratings = UserRating.objects.filter(uid=request.user.id)
 			mov = [];
 			
@@ -99,8 +98,6 @@ def dashboard(request):
 						mov.append(f.mid)
 
 				movies = json.dumps(mov)
-				
-
 		else:
 			movies = json.dumps(movies)
 		print movies
@@ -133,8 +130,7 @@ def dashboard(request):
 			for f in filler:
 				movies.append(f.mid)
 
-		context = RequestContext(request, {'initial_recommendations':movies,
-																				'ratings_by_user' : user_ratings})
+		context = RequestContext(request, {'initial_recommendations':movies, 'ratings_by_user':user_ratings, 'username':request.user.username})
 		return render(request, 'dashboard.html', context)
 
 def rate_movie(request):
