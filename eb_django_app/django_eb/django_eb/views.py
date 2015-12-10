@@ -72,6 +72,10 @@ def dashboard(request):
 		)
 	else:
 		user_ratings = UserRating.objects.filter(uid=request.user.id)
+		ratings_by_user = []
+		for u in user_ratings:
+			ratings_by_user.append(u)
+
 		print "number of user ratings: "+str(len(user_ratings))
 		movies = [];
 		for rating in user_ratings:
@@ -91,7 +95,8 @@ def dashboard(request):
 			for f in filler:
 				movies.append(f.mid)
 
-		context = RequestContext(request, {'initial_recommendations':movies})
+		context = RequestContext(request, {'initial_recommendations':movies,
+																				'ratings_by_user' : user_ratings})
 		return render(request, 'dashboard.html', context)
 
 def rate_movie(request):
@@ -111,6 +116,13 @@ def rate_movie(request):
 		movie_recs = recommendation(movie.mid, request.POST.get('rating'))
 		movies = [];
 		for m in movie_recs:
-			print "movie rec: "+str(m.mid)
 			movies.append(m)
+
+		print "len of rating recs: "+str(len(movies))
+		if len(movies) < 20:
+			number = 20 - len(movies)
+			filler = RecRating.objects.order_by('rating')[:number]
+			for f in filler:
+				movies.append(f.mid)
+
 	return HttpResponse(serializers.serialize('json',movies), content_type = "application/json")
