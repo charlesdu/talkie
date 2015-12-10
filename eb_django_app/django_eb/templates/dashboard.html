@@ -51,7 +51,9 @@
       <div class="col-md-12">
         <center>
           <h3 style="background-color: #00B0F0; padding-top: 10px; padding-bottom: 10px; color: white; border-radius: 3px; font-family: 'Oswald', san-serif; font-size: 30px;">Search Results</h3>
-          <!-- <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> -->
+          <div id="loading" class="hidden">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+          </div>
         </center>
       </div>
     </div>
@@ -72,7 +74,7 @@
             <div id={{ forloop.counter0 }}  class ="col-md-3">
               <div class="image results">
                 <a data-toggle="modal" data-target=".bs-example-modal-lg">
-                  <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                  <img src=" {{ m.image_url }}" style="height:350px" class="img-thumbnail img-responsive">
                   <p>{{ m.name }}</p>
                 </a>
               </div>
@@ -81,7 +83,7 @@
             <div id={{ forloop.counter0 }}  class ="col-md-3">
                 <div class="image results">
                   <a data-toggle="modal" data-target=".bs-example-modal-lg">
-                    <img src=" {{ m.image_url }}" class="img-thumbnail img-responsive">
+                    <img src=" {{ m.image_url }}" style="height:350px" class="img-thumbnail img-responsive">
                     <p>{{ m.name }}</p>
                   </a>
                 </div>
@@ -173,6 +175,35 @@
     </div>
 	</div>
 
+  <style>
+  .hidden{
+      display:none;
+  }
+
+  .unhidden{
+      display:block;
+  }
+  </style>
+
+  <script type="text/javascript">
+  function unhide(divID) {
+  var item = document.getElementById(divID);
+  if (item) {
+        item.className = 'unhidden';
+      }
+  }
+  </script>
+
+  <script type="text/javascript">
+  function hide(divID) {
+  var item = document.getElementById(divID);
+  if (item) {
+        item.className = 'hidden';
+      }
+  }
+  </script>
+
+
 	<script>
 		var final_transcript = '';
 		var recognizing = false;
@@ -218,7 +249,7 @@
 			recognition.continuous = true;
 			recognition.interimResults = true;
 			recognition.onstart = function() {
-				recognizing = true;
+			recognizing = true;
 			};
 			recognition.onerror = function(event) {
 				if (event.error == 'no-speech') {
@@ -245,6 +276,7 @@
 				document.getElementById('query_input').value = '';
 				for (var i = event.resultIndex; i < event.results.length; ++i) {
 					if (event.results[i].isFinal) {
+            unhide('loading');
 						final_transcript += event.results[i][0].transcript;
 						$.ajax({
 							url : "/dashboard/",
@@ -271,6 +303,7 @@
 													  "</a>" +
 													"</div>" +
 												"</div>");
+          hide('loading');
 				  // }
 				 //  else {
 					// $('#results_container').append("<div id=" + i + " class = \"col-md-2\">" +
@@ -284,7 +317,6 @@
 					// 							  "</div>" +
 					// 							"</div>");
 				 //  }
-				 
 				}
 							},
 							error : function(xhr,errmsg,err) {
