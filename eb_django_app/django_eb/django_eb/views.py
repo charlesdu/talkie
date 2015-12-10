@@ -66,29 +66,39 @@ def dashboard(request):
 		if movies == "Recommendations":
 			# RECOMMENDATION GENERATOR
 			user_ratings = UserRating.objects.filter(uid=request.user.id)
-			movies = [];
+			mov = [];
 			
 			for rating in user_ratings:
 				movie_rec = recommendation(rating.mid_id, rating.rating)
 				for m in movie_rec:
 					if m.mid != rating.mid_id:
-						movies.append(m)
+						mov.append({'mid': m.mid ,
+                      'name': m.name,
+                      'description': m.description,
+                      'year': m.year,
+                      'critic_rating': m.critic_rating,
+                      'audience_rating': m.audience_rating,
+                      'runtime': m.runtime,
+                      'image_url': m.image_url
+                     })
 					if(len(movies)>=20):
 						break
 				if(len(movies)>=20):
 					break
 		
-				print "len of initial recs: "+str(len(movies))
-				if len(movies) < 20:
-					number = 20 - len(movies)
+				print "len of initial recs: "+str(len(mov))
+				if len(mov) < 20:
+					number = 20 - len(mov)
 					filler = RecRating.objects.order_by('rating')[:number]
 					for f in filler:
-						movies.append(f.mid)
+						mov.append(f.mid)
 
-				movies = serializers.serialize('json',movies)
+				movies = json.dumps(mov)
+				
+
 		else:
 			movies = json.dumps(movies)
-
+		print movies
 		return HttpResponse(
 			movies,
 			content_type = "application/json"
