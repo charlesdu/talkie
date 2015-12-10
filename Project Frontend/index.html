@@ -52,26 +52,25 @@
 
       <br>
 
-      <center><button type="button" class="btn btn-info btn-circle btn-xl"><i class="fa fa-microphone"></i></button></center>
+      <center><button type="button" id="btn-speech" class="btn btn-info btn-circle btn-xl" onclick="setColor('btn-speech', '#00B0F0')"><i class="fa fa-microphone"></i></button></center>
 
       <br>
 
       <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Start Speaking Now...">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" data-toggle="modal" data-target=".bs-example-modal-lg">Go!</button>
-            </span>
+        <div class="col-md-12">
+          <div class="form-group form-group-lg">
+            <input type="text" class="form-control" placeholder="Say something like &quot;Find me movies featuring Tom Hanks&quot;." style="text-align: center; font-size: 24px;">
           </div><!-- /input-group -->
         </div><!-- /.col-lg-10 -->
       </div><!-- /.row -->
 
       <br><br>
         <div class="row">
-          <div class="col-lg-8 col-lg-offset-2">
-            <center><h3>Search Results</h3></center>
-            <hr>
+          <div class="col-md-12">
+            <center>
+              <h3 style="background-color: #00B0F0; padding-top: 10px; padding-bottom: 10px; color: white; border-radius: 3px; font-family: 'Oswald', san-serif; font-size: 30px;">Search Results</h3>
+              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+            </center>
           </div>
       </div>
 
@@ -79,44 +78,40 @@
 
       <!-- first row of results -->
       <div class="row">
-        <div class = "col-md-2 col-lg-offset-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+        <div class = "col-md-3">
+          <a href="#">
+            <div class="image results" data-toggle="modal" data-target=".bs-example-modal-lg">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
          
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
 
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
 
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
       </div>
 
@@ -124,44 +119,40 @@
 
       <!-- second row of results -->
       <div class="row">
-        <div class = "col-md-2 col-lg-offset-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+        <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
          
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
 
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
 
-         <div class = "col-md-2">
-          <div class="panel panel-default">
-            <a href="#">
-              <div class="image">
-                <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
-              </div>  
-            </a>
-          </div> 
+         <div class = "col-md-3">
+          <a href="#">
+            <div class="image results">
+              <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+              <p>Forrest Gump</p>
+            </div>  
+          </a>
         </div>
       </div>
 
@@ -249,6 +240,7 @@
                               <a href="#">
                                 <div class="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -257,6 +249,7 @@
                               <a href="#">
                                 <div class ="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -265,6 +258,7 @@
                               <a href="#">
                                 <div class ="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -273,6 +267,7 @@
                               <a href="#">
                                 <div class ="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -281,6 +276,7 @@
                               <a href="#">
                                 <div class ="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -289,6 +285,7 @@
                               <a href="#">
                                 <div class ="image">
                                   <img src="docs/forrest_gump.jpg" class="img-thumbnail img-responsive">
+                                  <p>Forrest Gump</p>
                                 </div>
                               </a>
                             </div>
@@ -341,6 +338,21 @@
         $($('.star')[3]).toggleClass('fa-star-o').toggleClass('fa-star');
         $($('.star')[4]).toggleClass('fa-star-o').toggleClass('fa-star');
       });
+
+      var count = 1;
+        function setColor(btn, color) {
+            var property = document.getElementById(btn);
+            if (count == 0) {
+                property.style.backgroundColor = "#00B0F0"
+                property.style.borderColor = "#00B0F0"
+                count = 1;        
+            }
+            else {
+                property.style.backgroundColor = "#6666ff"
+                property.style.borderColor = "#6666ff"
+                count = 0;
+            }
+        }
     </script>
   </body>
 </html>
