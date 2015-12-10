@@ -167,6 +167,11 @@
             </div>
 
             <div class="rec-container">
+              <center>
+                <div id="loader" class="hidden">
+                  <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                </div>
+              </center>
             </div>
 
           </div>
@@ -626,7 +631,7 @@
     for(var i=clicked_rating ; i<5 ; i++) {
       $($('.star')[i]).addClass('fa-star-o');
     }
-
+    unhide("loader");
     var movie;
     if(is_initial) {
       movie = initial_recs[clicked_id];
@@ -646,6 +651,7 @@
                             mid: movie.mid,
                             rating: clicked_rating});
 
+        hide("loader");
         $('.rec-container').append("<hr>" +
                                       "<div class=\"row\">" +
                                         "<div class=\"col-md-12\">" +
