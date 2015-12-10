@@ -1,0 +1,102 @@
+body {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+*:focus {
+	outline: none;
+}
+
+@-webkit-keyframes pulse_animation {
+	0% { -webkit-transform: scale(1); }
+	10% { -webkit-transform: scale(1.2); }
+	20% { -webkit-transform: scale(1.1); }
+	30% { -webkit-transform: scale(1); }
+	40% { -webkit-transform: scale(1.15); }
+	50% { -webkit-transform: scale(1); }
+	60% { -webkit-transform: scale(1.05); }
+	70% { -webkit-transform: scale(1.15); }
+	80% { -webkit-transform: scale(1); }
+	100% { -webkit-transform: scale(1); }
+}
+
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+	outline: none !important;
+	background-color: #6666FF;
+	border-color: #6666FF;
+}
+
+.pulse.focus, .pulse:focus {
+	-webkit-animation-name: 'pulse_animation';
+	-webkit-animation-duration: 5000ms;
+	-webkit-transform-origin:70% 70%;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -5;
+}
+
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+#bg-black {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -4;
+  background-color: #000000;
+  opacity: 0.4;
+}
+
+.start-page {
+	background-color: rgba(245, 245, 245, 0.8);
+	border: 1px solid #E0E0E0;
+	border-radius: 5px;
+	margin: 120px auto;
+	padding: 10px;
+	width: 500px;
+}
+
+.welcome-header {
+	text-align: center;
+	margin-bottom: 10px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300px;
+}
+
+.login-button {
+	width: 400px;
+	background-color: #03A9F4;
+	color: white;
+	font-weight: bold;
+}
+
+.start-container {
+	width: 400px;
+	margin: 0px auto;
+}
+
+.error-login {
+	color: #E53935;
+}
+
+.slogan p {
+	font-size: 17px;
+}
