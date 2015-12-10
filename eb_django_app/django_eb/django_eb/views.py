@@ -64,10 +64,33 @@ def dashboard(request):
 		query = str(request.POST.get('query'))
 		movies = run_NLP(query)
 		if movies == "Recommendations":
-			# INSERT RECOMMENDATION GENERATOR
-			movies = None
+			# RECOMMENDATION GENERATOR
+			user_ratings = UserRating.objects.filter(uid=request.user.id)
+			movies = [];
+			
+			for rating in user_ratings:
+				movie_rec = recommendation(rating.mid_id, rating.rating)
+				for m in movie_rec:
+					if m.mid != rating.mid_id:
+						movies.append(m)
+					if(len(movies)>=20):
+						break
+				if(len(movies)>=20):
+					break
+		
+				print "len of initial recs: "+str(len(movies))
+				if len(movies) < 20:
+					number = 20 - len(movies)
+					filler = RecRating.objects.order_by('rating')[:number]
+					for f in filler:
+						movies.append(f.mid)
+
+				movies = serializers.serialize('json',movies)
+		else:
+			movies = json.dumps(movies)
+
 		return HttpResponse(
-			json.dumps(movies),
+			movies,
 			content_type = "application/json"
 		)
 	else:
