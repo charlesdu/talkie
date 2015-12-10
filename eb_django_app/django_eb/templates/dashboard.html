@@ -455,11 +455,35 @@
       console.log(movie);
       modal.find('.modal-title span').text(movie.name);
       modal.find('.modal_image').attr("src",movie.image_url);
-      modal.find('div.movie-desc p').text(movie.description);
+      if(movie.description === 'None') {
+        modal.find('div.movie-desc p').text("No description available for this movie.");
+      }
+      else {
+        modal.find('div.movie-desc p').text(movie.description);
+      }
+      
       modal.find('div.movie-info #year').text(movie.year);
-      modal.find('div.movie-info #runtime').text(movie.runtime);
-      modal.find('div.movie-info #audience-rating').text(movie.audience_rating);
-      modal.find('div.movie-info #critic-rating').text(movie.critic_rating);
+      modal.find('div.movie-info #runtime').text(movie.runtime+" minutes");
+      
+      var aud_rating = parseInt(movie.audience_rating);
+      if(aud_rating < 0) {
+        aud_rating = 3.3;
+      }
+      else {
+        aud_rating = aud_rating / 20.0;
+        aud_rating = Math.round( aud_rating * 10 ) / 10;
+      }
+      modal.find('div.movie-info #audience-rating').text(aud_rating.toString());
+      
+      var crit_rating = parseInt(movie.critic_rating);
+      if(crit_rating < 0) {
+        crit_rating = 3.7;
+      }
+      else {
+        crit_rating = crit_rating / 20.0;
+        crit_rating = Math.round( crit_rating * 10 ) / 10;
+      }
+      modal.find('div.movie-info #critic-rating').text(crit_rating.toString());
 
       
       for(var i=0 ; i<ratings_by_this_user.length ; i++) {
